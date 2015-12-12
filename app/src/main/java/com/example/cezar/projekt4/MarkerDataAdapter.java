@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.ecommerce.Product;
-
 import java.util.ArrayList;
 
 /**
@@ -33,11 +31,13 @@ public class MarkerDataAdapter extends ArrayAdapter<Marker> {
         TextView mLognitude = (TextView) convertView.findViewById(R.id.mLognitude);
         TextView mLagnitude = (TextView) convertView.findViewById(R.id.mLagnitude);
         TextView mDescription = (TextView) convertView.findViewById(R.id.mDescription);
+        TextView mVisited = (TextView) convertView.findViewById(R.id.mVisited);
         // Populate the data into the template view using the data object
         mName.setText(marker.getName());
         mLognitude.setText(String.valueOf(marker.getLognitude()));
-        mLagnitude.setText(String.valueOf(marker.getLagnitude()));
+        mLagnitude.setText(String.valueOf(marker.getLatitude()));
         mDescription.setText(marker.getDescription());
+        mVisited.setText(String.valueOf(marker.isVisited()));
         // Return the completed view to render on screen
         return convertView;
     }

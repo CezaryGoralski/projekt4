@@ -28,6 +28,7 @@ public class AddMarkerActivity extends AppCompatActivity {
         String name = String.valueOf(markerNameText.getText());
         String description =  String.valueOf(markerDescriptionText.getText());
         new Marker(lognitude,latitude,description,name);
+
         Marker.writeMarkers();
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
         startActivity(openSecondActivity);
