@@ -359,6 +359,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             retrofit.Call<AuthResponseDto> response = service.authentication(mUser);
 
+
             AuthResponseDto authDto = null;
 
             try {

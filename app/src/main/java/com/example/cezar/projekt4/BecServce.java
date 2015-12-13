@@ -20,4 +20,7 @@ public interface BecServce {
     @Headers({"Accept: application/json", "Content-Type: application/json"})
     Call<AuthResponseDto> authentication(@Body UserDto userDto);
 
+    @GET("/orders")
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    Call<List<OrderDto>> getOrders();
 }
