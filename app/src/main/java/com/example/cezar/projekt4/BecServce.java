@@ -7,6 +7,7 @@ import java.util.Map;
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
@@ -16,7 +17,7 @@ import retrofit.http.Path;
 public interface BecServce {
 
     @POST("/auth")
-    public AuthResponseDto authentication(@Body UserDto userDto);
+    @Headers({"Accept: application/json", "Content-Type: application/json"})
+    Call<AuthResponseDto> authentication(@Body UserDto userDto);
 
-    Call<UserDto> createUser(@Body UserDto userDto);
 }

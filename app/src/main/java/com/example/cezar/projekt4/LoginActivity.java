@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -53,6 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -337,34 +339,44 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private UserDto mUser;
-        private final String mLoginUrl = getString(R.string.login_url);
 
         private BecServce service;
 
         UserLoginTask(String email, String password) {
-           mUser = new UserDto(email,password);
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://1d76860a.ngrok.io")
-                    .build();
-
-            service = retrofit.create(BecServce.class);
-
-            AuthResponseDto response = service.authentication(mUser);
-
-            if(response.getResult()!= null){
-                //user authorized
-                Toast.makeText(LoginActivity.this, "token", Toast.LENGTH_SHORT).show();
-            }else{
-                //user incorrect
-                //response.get("error")
-            }
+            mUser = new UserDto(email,password);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://1d76860a.ngrok.io/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            service = retrofit.create(BecServce.class);
+
+            retrofit.Call<AuthResponseDto> response = service.authentication(mUser);
+
+            AuthResponseDto authDto = null;
+
+            try {
+                authDto = response.execute().body();
+            } catch (IOException e) {
+                //log error
+            }
+
+            if(authDto!=null){
+                if(authDto.getResult()!= null){
+                    //user authorized
+                    Toast.makeText(LoginActivity.this, "token", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this, "brak tokena", Toast.LENGTH_SHORT).show();
+                    //user incorrect
+                    //response.get("error")
+                }
+            }
 
             // TODO: register the new account here.
             return true;
