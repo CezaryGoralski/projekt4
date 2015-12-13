@@ -75,7 +75,7 @@ public class MapsActivity1 extends FragmentActivity
     private GoogleApiClient mGoogleApiClient;
     private TextView mMessageView;
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
-
+    private GoogleMap mapa;
 
     private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
             -73.998585);
@@ -113,19 +113,7 @@ public class MapsActivity1 extends FragmentActivity
             ReadTask downloadTask = new ReadTask();
             downloadTask.execute(url);
          */
-       String url = getMapsApiDirectionsUrl();
-       ReadTask readTask = null;
-        try {
-            ReadTask downloadTask = new ReadTask();
-            downloadTask.execute(url).get();
-                //    String result = new ReadTask().execute().get();
 
-//            readTask.execute(s);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 
   //      readTaskk.execute(url);
 
@@ -144,6 +132,32 @@ public class MapsActivity1 extends FragmentActivity
         String url = "https://maps.googleapis.com/maps/api/directions/"
                 + output + "?" + params;
         System.out.println(url);
+        return url;
+    }
+
+    private String getMapsApiDirectionsUrl(ArrayList<Marker> markersList) {
+
+        String url = null;
+        if(markersList.size() > 1) {
+            String origin = "origin=" + markersList.get(0).getLatitude() + "," + markersList.get(0).getLognitude();
+            String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+            String sensor = "sensor=false";
+            String output = "json";
+            String params = origin + "&"+ destination +"&" + sensor;
+            markersList.remove(0);
+            markersList.remove(markersList.size() - 1);
+            if(markersList.size() > 0 ){
+                String waypoints = "waypoints=optimize:true";
+                for(Marker m: markersList){
+                    waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLognitude();
+                }
+                params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+            }
+           url = "https://maps.googleapis.com/maps/api/directions/"
+                    + output + "?" + params;
+        }
+        String waypoints = "waypoints=optimize:true|" + BROOKLYN_BRIDGE.latitude + ","
+                + BROOKLYN_BRIDGE.longitude;
         return url;
     }
 
@@ -209,16 +223,15 @@ public class MapsActivity1 extends FragmentActivity
                     LatLng position = new LatLng(lat, lng);
                     Log.e("data", position.toString());
                     points.add(position);
-                    mypoints.add(position);
+                  //  mypoints.add(position);
                 }
 
                 polyLineOptions.addAll(points);
-                polyLineOptions.width(2);
+                polyLineOptions.width(10);
                 polyLineOptions.color(Color.BLUE);
             }
             Log.e("data","transformed");
-
-            polyLineOptionsb = polyLineOptions;
+            mapa.addPolyline(polyLineOptions);
 
         }
     }
@@ -279,7 +292,38 @@ public class MapsActivity1 extends FragmentActivity
                     .title("poznan"));
         }
 
+        //rysowanie
+        mapa = map;
 
+        if(Marker.getToDoList().size() > 1) {
+            String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
+            ReadTask readTask = null;
+            try {
+                ReadTask downloadTask = new ReadTask();
+                downloadTask.execute(url).get();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        }
+        map.addMarker(new MarkerOptions()
+                .position(LOWER_MANHATTAN)
+                .title("manhatan"));
+
+        map.addMarker(new MarkerOptions()
+                .position(BROOKLYN_BRIDGE)
+                .title("bridge"));
+
+        map.addMarker(new MarkerOptions()
+                .position(WALL_STREET)
+                .title("wall_strett"));
+/*
+
+        Log.e("data",String.valueOf(mypoints.size()));
+        map.addPolyline(new PolylineOptions().addAll(mypoints).width(5).color(Color.RED));*/
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             @Override
@@ -298,23 +342,13 @@ public class MapsActivity1 extends FragmentActivity
 
             }
         });
-        PolylineOptions polylineOptions =  new PolylineOptions();
-        ArrayList<LatLng> points = new ArrayList<LatLng>();
-        points.add(tmp);
-        points.add(tmp2);
-        for(Marker m: Marker.executeKruskal()) {
-            LatLng point = new LatLng(m.getLatitude(), m.getLognitude());
-            points.add(point);
-
-        }
-
-        polylineOptions.addAll(mypoints);
-        polylineOptions.width(5);
-        polylineOptions.color(Color.RED);
 
 
-            map.addPolyline(polylineOptions);
-            Log.e("error","null on pollyline");
+
+
+
+
+           ;
 
     }
 
