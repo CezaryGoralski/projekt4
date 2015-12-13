@@ -29,21 +29,34 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
@@ -63,12 +76,22 @@ public class MapsActivity1 extends FragmentActivity
     private TextView mMessageView;
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
 
+
+    private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
+            -73.998585);
+    private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
+    private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
+
+    PolylineOptions polyLineOptionsb = null;
+    private ArrayList<LatLng> mypoints = new ArrayList<LatLng>();
+
     // These settings are the same as the settings for the map. They will in fact give you updates
     // at the maximal rates currently possible.
     private static final LocationRequest REQUEST = LocationRequest.create()
             .setInterval(5000)         // 5 seconds
             .setFastestInterval(16)    // 16ms = 60fps
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    private PolylineOptions polylineOptionsb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +108,119 @@ public class MapsActivity1 extends FragmentActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        /*
+            String url = getMapsApiDirectionsUrl();
+            ReadTask downloadTask = new ReadTask();
+            downloadTask.execute(url);
+         */
+       String url = getMapsApiDirectionsUrl();
+       ReadTask readTask = null;
+        try {
+            ReadTask downloadTask = new ReadTask();
+            downloadTask.execute(url).get();
+                //    String result = new ReadTask().execute().get();
+
+//            readTask.execute(s);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+  //      readTaskk.execute(url);
+
+    }
+
+    private String getMapsApiDirectionsUrl() {
+
+        String origin ="origin=" + LOWER_MANHATTAN.latitude + "," + LOWER_MANHATTAN.longitude;
+        String destination = "destination="  + WALL_STREET.latitude + "," + WALL_STREET.longitude;
+        String waypoints = "waypoints=optimize:true|" + BROOKLYN_BRIDGE.latitude + ","
+                + BROOKLYN_BRIDGE.longitude;
+
+        String sensor = "sensor=false";
+        String params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/"
+                + output + "?" + params;
+        System.out.println(url);
+        return url;
+    }
+
+    private class ReadTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... url) {
+            String data = "";
+            try {
+                HttpConnection http = new HttpConnection();
+                data = http.readUrl(url[0]);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            Log.e("data","data readed");
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            new ParserTask().execute(result);
+        }
+    }
+
+
+    private class ParserTask extends
+            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(
+                String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                PathJSONParser parser = new PathJSONParser();
+                routes = parser.parse(jObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions polyLineOptions = null;
+
+            // traversing through routes
+            Log.e("data", String.valueOf(routes.size()));
+            for (int i = 0; i < routes.size(); i++) {
+                points = new ArrayList<LatLng>();
+                polyLineOptions = new PolylineOptions();
+                List<HashMap<String, String>> path = routes.get(i);
+
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+                    Log.e("data", position.toString());
+                    points.add(position);
+                    mypoints.add(position);
+                }
+
+                polyLineOptions.addAll(points);
+                polyLineOptions.width(2);
+                polyLineOptions.color(Color.BLUE);
+            }
+            Log.e("data","transformed");
+
+            polyLineOptionsb = polyLineOptions;
+
+        }
     }
 
     @Override
@@ -98,6 +234,8 @@ public class MapsActivity1 extends FragmentActivity
         super.onPause();
         mGoogleApiClient.disconnect();
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -119,13 +257,27 @@ public class MapsActivity1 extends FragmentActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        LatLng tmp = null;
+        LatLng tmp2 = null;
         for(Address m: a){
+            tmp = new LatLng(m.getLatitude(), m.getLongitude());
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
                     .title("warszawa"));
         }
 
+        try {
+            a = g.getFromLocationName("Poznan",1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(Address m: a){
+            tmp2 = new LatLng(m.getLatitude(), m.getLongitude());
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(m.getLatitude(), m.getLongitude()))
+                    .title("poznan"));
+        }
 
 
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -146,6 +298,24 @@ public class MapsActivity1 extends FragmentActivity
 
             }
         });
+        PolylineOptions polylineOptions =  new PolylineOptions();
+        ArrayList<LatLng> points = new ArrayList<LatLng>();
+        points.add(tmp);
+        points.add(tmp2);
+        for(Marker m: Marker.executeKruskal()) {
+            LatLng point = new LatLng(m.getLatitude(), m.getLognitude());
+            points.add(point);
+
+        }
+
+        polylineOptions.addAll(mypoints);
+        polylineOptions.width(5);
+        polylineOptions.color(Color.RED);
+
+
+            map.addPolyline(polylineOptions);
+            Log.e("error","null on pollyline");
+
     }
 
       /**
