@@ -325,7 +325,7 @@ public class MapsActivity1 extends FragmentActivity
         Log.e("data",String.valueOf(mypoints.size()));
         map.addPolyline(new PolylineOptions().addAll(mypoints).width(5).color(Color.RED));*/
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-
+//dupa
             @Override
             public void onMapLongClick(LatLng latLng) {
                 for (com.google.android.gms.maps.model.Marker marker : markersList) {
