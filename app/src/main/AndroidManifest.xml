@@ -37,15 +37,20 @@
 
         <activity
             android:name=".MapsActivity1"
-            android:label="@string/title_activity_maps1">
+            android:label="@string/title_activity_maps1"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity" />
-        <activity android:name=".AddMarkerActivity" />
+        <activity android:name=".ListActivity"
+            android:label="Marker List"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddMarkerActivity"
+            android:label="Add Marker"
+            android:screenOrientation="portrait"/>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -57,7 +62,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".MapsActivity1">
+            android:parentActivityName=".MapsActivity1"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cezar.projekt4.MapsActivity1" />

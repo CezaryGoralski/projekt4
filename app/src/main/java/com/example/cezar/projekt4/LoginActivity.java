@@ -33,15 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
@@ -54,7 +45,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -349,7 +339,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+/*
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://1d76860a.ngrok.io/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -377,7 +367,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     //user incorrect
                     //response.get("error")
                 }
-            }
+            }*/
 
             // TODO: register the new account here.
             return true;

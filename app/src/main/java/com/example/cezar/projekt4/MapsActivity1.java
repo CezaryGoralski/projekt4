@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -78,8 +79,15 @@ public class MapsActivity1 extends FragmentActivity
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showList();
+            }
+        });
+
+
     }
 
     @Override
@@ -165,7 +173,7 @@ public class MapsActivity1 extends FragmentActivity
         return false;
     }
 
-    public void showList(View view) {
+    public void showList() {
         Intent openSecondActivity = new Intent(this,ListActivity.class);
         openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
         openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
