@@ -10,20 +10,15 @@
     tools:context="com.example.cezar.projekt4.ListActivity">
 
     <LinearLayout
+        android:id="@+id/buttonLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:weightSum="1"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="109dp"
-            android:id="@+id/listView"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.31" />
+        android:layout_alignParentStart="true"
+        >
 
         <Button
             android:layout_width="match_parent"
@@ -31,7 +26,9 @@
             android:text="ADD MARKER"
             android:id="@+id/add_button"
             android:layout_gravity="center_horizontal"
-            android:onClick="openAddActivity" />
+            android:onClick="openAddActivity"
+            style="@style/BlackButton"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -39,6 +36,16 @@
             android:text="MAP"
             android:id="@+id/map_button"
             android:layout_gravity="center_horizontal"
-            android:onClick="openMap" />
+            android:onClick="openMap"
+            style="@style/BlackButton"/>
     </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.44"
+        android:layout_above="@id/buttonLayout"
+        />
 </RelativeLayout>

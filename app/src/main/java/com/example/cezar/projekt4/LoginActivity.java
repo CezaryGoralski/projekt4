@@ -37,8 +37,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import retrofit.Retrofit;
-
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -328,8 +326,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+/*
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://1d76860a.ngrok.io/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            service = retrofit.create(BecServce.class);
+
+            retrofit.Call<AuthResponseDto> response = service.authentication(mUser);
+>>>>>>> 710e8bd9fd4d773a35faf11f8ecac1ff9e8a6a3f
 
 
+
+<<<<<<< HEAD
+=======
+            try {
+                authDto = response.execute().body();
+            } catch (IOException e) {
+                //log error
+            }
+
+            if(authDto!=null){
+                if(authDto.getResult()!= null){
+                    //user authorized
+                    Toast.makeText(LoginActivity.this, "token", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this, "brak tokena", Toast.LENGTH_SHORT).show();
+                    //user incorrect
+                    //response.get("error")
+                }
+            }*/
 
 
             // TODO: register the new account here.
