@@ -32,35 +32,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONException;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+//import retrofit.Retrofit;
+
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -350,34 +328,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://1d76860a.ngrok.io/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            service = retrofit.create(BecServce.class);
-
-            retrofit.Call<AuthResponseDto> response = service.authentication(mUser);
 
 
-            AuthResponseDto authDto = null;
 
-            try {
-                authDto = response.execute().body();
-            } catch (IOException e) {
-                //log error
-            }
-
-            if(authDto!=null){
-                if(authDto.getResult()!= null){
-                    //user authorized
-                    Toast.makeText(LoginActivity.this, "token", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(LoginActivity.this, "brak tokena", Toast.LENGTH_SHORT).show();
-                    //user incorrect
-                    //response.get("error")
-                }
-            }
 
             // TODO: register the new account here.
             return true;

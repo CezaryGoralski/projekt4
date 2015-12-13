@@ -6,6 +6,17 @@ import java.util.Date;
  * Created by Kuba on 13.12.2015.
  */
 public class AddressDto {
+    @Override
+    public String toString() {
+        return "AddressDto{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", post='" + post + '\'' +
+                ", number='" + number + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
     private String street;
 
     private String city;

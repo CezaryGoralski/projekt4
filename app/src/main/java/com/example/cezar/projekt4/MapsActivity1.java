@@ -30,6 +30,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -39,6 +41,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -50,6 +53,11 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +84,7 @@ public class MapsActivity1 extends FragmentActivity
     private TextView mMessageView;
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
     private GoogleMap mapa;
+    private boolean refresh = true;
 
     private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
             -73.998585);
@@ -108,7 +117,7 @@ public class MapsActivity1 extends FragmentActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-<<<<<<< HEAD
+        refresh = getIntent().getBooleanExtra("refresh", false);
         /*
             String url = getMapsApiDirectionsUrl();
             ReadTask downloadTask = new ReadTask();
@@ -231,17 +240,50 @@ public class MapsActivity1 extends FragmentActivity
                 polyLineOptions.width(10);
                 polyLineOptions.color(Color.BLUE);
             }
-            Log.e("data","transformed");
+            Log.e("data", "transformed");
             mapa.addPolyline(polyLineOptions);
 
         }
-=======
 
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
->>>>>>> da60a77747ddd4dfba9cc865c8eed8c489f709da
+    //    Intent loginIntent = new Intent(this, LoginActivity.class);
+    //    startActivity(loginIntent);
+
     }
 
+
+    private class DownloadList extends AsyncTask<Void, Void, List<RequestOrderDto>> {
+
+        @Override
+        protected List<RequestOrderDto> doInBackground(Void... params) {
+
+            URL url = null;
+            try {
+                url = new URL("http://b3982186.ngrok.io/orders");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            Gson gson = new Gson();
+
+            OrderDto[] ordersDto = new OrderDto[0];
+            ;
+            try {
+                HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+                connect.setRequestMethod("GET");
+                connect.setRequestProperty("Content-Type", "application/json");
+                connect.setRequestProperty("Accept", "application/json");
+                InputStream ios = connect.getInputStream();
+
+                String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
+                ordersDto = gson.fromJson(body, OrderDto[].class);
+                ios.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(ordersDto[0]);
+            return ordersDto[0].getRequestOrder();
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -260,16 +302,9 @@ public class MapsActivity1 extends FragmentActivity
     public void onMapReady(GoogleMap map) {
         map.setMyLocationEnabled(true);
         map.setOnMyLocationButtonClickListener(this);
-        Marker.readMarkers();
-        for(Marker m: Marker.getToDoList()){
-            MarkerOptions marketOption = new MarkerOptions()
-                    .position(new LatLng(m.getLatitude(), m.getLognitude()))
-                    .title(m.getName());
-          com.google.android.gms.maps.model.Marker mapMarker =   map.addMarker(marketOption);
-            markersList.add(mapMarker);
-        }
+
         Geocoder g = new Geocoder(this, Locale.getDefault());
-        List<Address> a = new ArrayList<Address>();
+       /* List<Address> a = new ArrayList<Address>();
 
         try {
          a = g.getFromLocationName("Warszawa",1);
@@ -296,11 +331,55 @@ public class MapsActivity1 extends FragmentActivity
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
                     .title("poznan"));
-        }
+        }*/
 
+        Marker.readMarkers();
         //rysowanie
         mapa = map;
+        if(refresh) {
+            refresh = false;
+            List<RequestOrderDto> requestOrderDtos = null;
 
+
+            try {
+                requestOrderDtos = new DownloadList().execute().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            Marker.convertToMarkers(requestOrderDtos);
+            System.out.println("after convert");
+            for (Marker m : Marker.getList()) {
+                System.out.println (m.getName());
+                List<Address> adresses = new ArrayList<Address>();
+                try {
+                    adresses = g.getFromLocationName(m.getAdress(), 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                    if(adresses != null) {
+                        m.setLatitude(adresses.get(0).getLatitude());
+                        m.setLognitude(adresses.get(0).getLongitude());
+                        m.setVisited(false);
+                    }
+            }
+            System.out.println("end after convert");
+            Marker.writeMarkers();
+
+        }
+
+
+
+        for(Marker m: Marker.getToDoList()){
+            MarkerOptions marketOption = new MarkerOptions()
+                    .position(new LatLng(m.getLatitude(), m.getLognitude()))
+                    .title(m.getName());
+            com.google.android.gms.maps.model.Marker mapMarker =   map.addMarker(marketOption);
+            markersList.add(mapMarker);
+        }
         if(Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
             ReadTask readTask = null;
@@ -315,6 +394,7 @@ public class MapsActivity1 extends FragmentActivity
             }
 
         }
+        /*
         map.addMarker(new MarkerOptions()
                 .position(LOWER_MANHATTAN)
                 .title("manhatan"));
@@ -326,6 +406,7 @@ public class MapsActivity1 extends FragmentActivity
         map.addMarker(new MarkerOptions()
                 .position(WALL_STREET)
                 .title("wall_strett"));
+                */
 /*
 
         Log.e("data",String.valueOf(mypoints.size()));
@@ -419,4 +500,10 @@ public class MapsActivity1 extends FragmentActivity
           openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
           startActivity(openSecondActivity);
       }
+
+      public void refreshMarkers(View view){
+          Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+          openSecondActivity.putExtra("refresh", true);
+          startActivity(openSecondActivity);
+    }
   }

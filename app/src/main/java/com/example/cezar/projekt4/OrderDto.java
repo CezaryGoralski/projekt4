@@ -35,4 +35,13 @@ public class OrderDto {
     public void setDelivered(Boolean delivered) {
         this.delivered = delivered;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "id=" + id +
+                ", requestOrder=" + requestOrder +
+                ", delivered=" + delivered +
+                '}';
+    }
 }

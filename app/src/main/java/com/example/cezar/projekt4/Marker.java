@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
 /**
@@ -23,6 +24,7 @@ public class Marker implements Serializable{
     private double latitude;
     private String description;
     private String name;
+    private String adress;
 
     public boolean isVisited() {
         return visited;
@@ -58,6 +60,11 @@ public class Marker implements Serializable{
         this.lognitude = lognitude;
         this.latitude = latitude;
         this.description = description;
+        this.name = name;
+        list.add(this);
+    }
+
+    public Marker(String name) {
         this.name = name;
         list.add(this);
     }
@@ -99,10 +106,10 @@ public class Marker implements Serializable{
         try
         {
             File file = new File(Environment.getExternalStorageDirectory()  + File.separator + "markers.ser");
-            if(!file.exists()) {
+        //    if(!file.exists()) {
                 file.createNewFile();
                 Log.e("msg","file created");
-            }
+      //      }
             FileOutputStream fileOut =
                     new FileOutputStream(file, false);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -122,7 +129,7 @@ public class Marker implements Serializable{
         if(!f.exists()){
             try
             {
-                list = new ArrayList<Marker>();
+
                 FileInputStream fileIn = new FileInputStream(f);
 
                 ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -245,7 +252,28 @@ public class Marker implements Serializable{
             return markers;
     }
 
+    public String getAdress() {
+        return adress;
+    }
 
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public static void  convertToMarkers(List<RequestOrderDto> lista){
+        clearMarkers();
+        ArrayList<Marker> newlist = new ArrayList<Marker>();
+        System.out.println("ConvertToMarkers");
+        for(RequestOrderDto requestOrderDto: lista){
+            System.out.println(requestOrderDto.getId());
+            Marker marker = new Marker(String.valueOf(requestOrderDto.getId()));
+            marker.setAdress(requestOrderDto.getAddress().getCity() + "," + requestOrderDto.getAddress().getStreet() + " " + requestOrderDto.getAddress().getNumber());
+            newlist.add(marker);
+        }
+        list = newlist;
+        System.out.println("end");
+
+    }
 }
 
 
