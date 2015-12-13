@@ -40,6 +40,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.text.BoringLayout;
 import android.util.Log;
@@ -107,6 +108,23 @@ public class MapsActivity1 extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps1);
         mMessageView = (TextView) findViewById(R.id.message_text);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showList();
+            }
+        });
+
+        FloatingActionButton refreshFab = (FloatingActionButton) findViewById(R.id.refreshFab);
+        refreshFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshMarkers();
+            }
+        });
+
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -247,6 +265,9 @@ public class MapsActivity1 extends FragmentActivity
 
     //    Intent loginIntent = new Intent(this, LoginActivity.class);
     //    startActivity(loginIntent);
+
+
+
 
     }
 
@@ -439,6 +460,7 @@ public class MapsActivity1 extends FragmentActivity
 
     }
 
+
       /**
        * Button to get current Location. This demonstrates how to get the current Location as required
        * without needing to register a LocationListener.
@@ -494,16 +516,17 @@ public class MapsActivity1 extends FragmentActivity
           return false;
       }
 
-      public void showList(View view) {
-          Intent openSecondActivity = new Intent(this, ListActivity.class);
-          openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
-          openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
-          startActivity(openSecondActivity);
-      }
 
-      public void refreshMarkers(View view){
+      public void refreshMarkers() {
           Intent openSecondActivity = new Intent(this, MapsActivity1.class);
           openSecondActivity.putExtra("refresh", true);
           startActivity(openSecondActivity);
+      }
+    public void showList() {
+        Intent openSecondActivity = new Intent(this,ListActivity.class);
+        openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+        openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
+        startActivity(openSecondActivity);
+
     }
   }
