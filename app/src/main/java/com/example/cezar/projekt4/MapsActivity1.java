@@ -108,6 +108,7 @@ public class MapsActivity1 extends FragmentActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+<<<<<<< HEAD
         /*
             String url = getMapsApiDirectionsUrl();
             ReadTask downloadTask = new ReadTask();
@@ -234,6 +235,11 @@ public class MapsActivity1 extends FragmentActivity
             mapa.addPolyline(polyLineOptions);
 
         }
+=======
+
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+>>>>>>> da60a77747ddd4dfba9cc865c8eed8c489f709da
     }
 
     @Override
