@@ -28,5 +28,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="markAsVistied" />
+        android:onClick="markAsVistied"
+        style="@style/BlackButton"/>
 </RelativeLayout>

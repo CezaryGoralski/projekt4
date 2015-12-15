@@ -34,6 +34,8 @@ public class AddMarkerActivity extends AppCompatActivity {
 
         Marker.writeMarkers();
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+        openSecondActivity.putExtra("Latitude", latitude);
+        openSecondActivity.putExtra("Lognitude", lognitude);
         startActivity(openSecondActivity);
 
     }

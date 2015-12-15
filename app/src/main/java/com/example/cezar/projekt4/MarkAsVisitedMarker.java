@@ -9,11 +9,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MarkAsVisitedMarker extends AppCompatActivity {
+    private double latitude;
+    private double lognitude;
     String markerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_as_visited_marker);
+        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
+        latitude = getIntent().getDoubleExtra("Latitude", 0);
         markerName = getIntent().getStringExtra("Name");
         TextView textViewMarkerName = (TextView) findViewById(R.id.markerNameMarkAsVisited);
         textViewMarkerName.setText(markerName);
@@ -25,6 +29,8 @@ public class MarkAsVisitedMarker extends AppCompatActivity {
         Marker.writeMarkers();
         Toast.makeText(this, "Marker marked as visited", Toast.LENGTH_SHORT).show();
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+        openSecondActivity.putExtra("Latitude", latitude);
+        openSecondActivity.putExtra("Lognitude", lognitude);
         startActivity(openSecondActivity);
     }
 }

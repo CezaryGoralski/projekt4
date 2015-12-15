@@ -86,7 +86,8 @@ public class MapsActivity1 extends FragmentActivity
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
     private GoogleMap mapa;
     private boolean refresh = true;
-
+    private double latitude;
+    private double lognitude;
     private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
             -73.998585);
     private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
@@ -136,6 +137,8 @@ public class MapsActivity1 extends FragmentActivity
                 .addOnConnectionFailedListener(this)
                 .build();
         refresh = getIntent().getBooleanExtra("refresh", false);
+        latitude = getIntent().getDoubleExtra("Latitude", 0);
+        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         /*
             String url = getMapsApiDirectionsUrl();
             ReadTask downloadTask = new ReadTask();
@@ -166,13 +169,15 @@ public class MapsActivity1 extends FragmentActivity
     private String getMapsApiDirectionsUrl(ArrayList<Marker> markersList) {
 
         String url = null;
-        if(markersList.size() > 1) {
-            String origin = "origin=" + markersList.get(0).getLatitude() + "," + markersList.get(0).getLognitude();
+        Log.e("size", String.valueOf(markersList.size()));
+        if(markersList.size() > 0) {
+           // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+            String origin = "origin=" + latitude + "," + lognitude;
             String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
             String sensor = "sensor=false";
             String output = "json";
             String params = origin + "&"+ destination +"&" + sensor;
-            markersList.remove(0);
+           // markersList.remove(0);
             markersList.remove(markersList.size() - 1);
             if(markersList.size() > 0 ){
                 String waypoints = "waypoints=optimize:true";
@@ -184,8 +189,7 @@ public class MapsActivity1 extends FragmentActivity
            url = "https://maps.googleapis.com/maps/api/directions/"
                     + output + "?" + params;
         }
-        String waypoints = "waypoints=optimize:true|" + BROOKLYN_BRIDGE.latitude + ","
-                + BROOKLYN_BRIDGE.longitude;
+        System.out.println(url);
         return url;
     }
 
@@ -249,7 +253,7 @@ public class MapsActivity1 extends FragmentActivity
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-                    Log.e("data", position.toString());
+                 //   Log.e("data", position.toString());
                     points.add(position);
                   //  mypoints.add(position);
                 }
@@ -279,7 +283,7 @@ public class MapsActivity1 extends FragmentActivity
 
             URL url = null;
             try {
-                url = new URL("http://b3982186.ngrok.io/orders");
+                url = new URL("http://2b25146f.ngrok.io/orders");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -442,6 +446,8 @@ public class MapsActivity1 extends FragmentActivity
                         // markersList.remove(marker);
                         Intent openSecondActivity = new Intent(MapsActivity1.this, MarkAsVisitedMarker.class);
                         openSecondActivity.putExtra("Name", marker.getTitle());
+                        openSecondActivity.putExtra("Latitude", latitude);
+                        openSecondActivity.putExtra("Lognitude", lognitude);
                         Toast.makeText(MapsActivity1.this, "got clicked", Toast.LENGTH_SHORT).show();
                         startActivity(openSecondActivity);
                         break;
@@ -520,6 +526,8 @@ public class MapsActivity1 extends FragmentActivity
       public void refreshMarkers() {
           Intent openSecondActivity = new Intent(this, MapsActivity1.class);
           openSecondActivity.putExtra("refresh", true);
+          openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+          openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
           startActivity(openSecondActivity);
       }
     public void showList() {

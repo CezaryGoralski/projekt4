@@ -33,7 +33,7 @@ public class ListActivity extends AppCompatActivity {
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         Marker.readMarkers();
-        MarkerDataAdapter adapter = new MarkerDataAdapter(this, Marker.getToDoList());
+        MarkerDataAdapter adapter = new MarkerDataAdapter(this, Marker.getList());
 
         mylist = (ListView) findViewById(R.id.listView);
         //  adapter = new ArrayAdapter<Product>(this,android.R.layout.simple_list_item_1,itemList);*/
@@ -49,6 +49,8 @@ public class ListActivity extends AppCompatActivity {
 
     public void openMap(View view) {
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+        openSecondActivity.putExtra("Latitude", latitude);
+        openSecondActivity.putExtra("Lognitude", lognitude);
         startActivity(openSecondActivity);
     }
 

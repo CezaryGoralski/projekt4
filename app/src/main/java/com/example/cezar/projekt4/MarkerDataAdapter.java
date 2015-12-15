@@ -28,14 +28,13 @@ public class MarkerDataAdapter extends ArrayAdapter<Marker> {
         }
         // Lookup view for data population
         TextView mName = (TextView) convertView.findViewById(R.id.mName);
-        TextView mLognitude = (TextView) convertView.findViewById(R.id.mLognitude);
         TextView mLagnitude = (TextView) convertView.findViewById(R.id.mLagnitude);
         TextView mDescription = (TextView) convertView.findViewById(R.id.mDescription);
         TextView mVisited = (TextView) convertView.findViewById(R.id.mVisited);
         // Populate the data into the template view using the data object
         mName.setText(marker.getName());
-        mLognitude.setText(String.valueOf(marker.getLognitude()));
-        mLagnitude.setText(String.valueOf(marker.getLatitude()));
+
+        mLagnitude.setText(String.valueOf(marker.getAdress()));
         mDescription.setText(marker.getDescription());
         mVisited.setText(String.valueOf(marker.isVisited()));
         // Return the completed view to render on screen

@@ -43,12 +43,14 @@ public class Marker implements Serializable{
 
     public static ArrayList<Marker> getToDoList() {
         ArrayList<Marker> toDoList = new ArrayList<Marker>();
+
         for (Marker m: getList()) {
             if(!m.isVisited()){
                 toDoList.add(m);
             }
 
         }
+        Log.e("todolist", String.valueOf(toDoList.size()));
         return toDoList;
     }
 
@@ -168,10 +170,10 @@ public class Marker implements Serializable{
 
 
     public static ArrayList<Marker> executeKruskal(){
-        readMarkers();
+        //readMarkers();
         ArrayList<Marker> markers = Marker.getToDoList();
-
-        if(markers.size() > 3) {
+        System.out.println("size = " + markers.size());
+        if(markers.size() > 1) {
             TreeMap<String, Marker> markersMap = new TreeMap<String, Marker>();
 
             for (Marker m : markers) {
