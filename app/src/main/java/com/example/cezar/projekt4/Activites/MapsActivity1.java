@@ -117,7 +117,15 @@ public class MapsActivity1 extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showList();
+                showPlaces();
+            }
+        });
+
+        FloatingActionButton listFab = (FloatingActionButton) findViewById(R.id.fabLists);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLists();
             }
         });
 
@@ -128,7 +136,6 @@ public class MapsActivity1 extends AppCompatActivity
                 refreshMarkers();
             }
         });
-
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -545,13 +552,18 @@ public class MapsActivity1 extends AppCompatActivity
           openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
           startActivity(openSecondActivity);
       }
-    public void showList() {
+
+    public void showPlaces() {
         Intent openSecondActivity = new Intent(this,PlacesActivity.class);
         if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
             openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
             openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
         }
         startActivity(openSecondActivity);
+
+    }
+
+    public void showLists(){
 
     }
   }
