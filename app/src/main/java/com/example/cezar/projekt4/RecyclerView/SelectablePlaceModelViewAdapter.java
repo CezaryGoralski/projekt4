@@ -31,7 +31,7 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
     public SelectablePlaceModelHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         activity = parent.getContext();
-        final View view = inflater.inflate(R.layout.place_item, null);
+        final View view = inflater.inflate(R.layout.selectable_place_item, null);
         return new SelectablePlaceModelHolder(view);
 
     }
