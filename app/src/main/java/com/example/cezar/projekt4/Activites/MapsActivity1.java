@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Geocoder;
@@ -330,7 +331,6 @@ public class MapsActivity1 extends FragmentActivity
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
 
     @Override
     public void onMapReady(GoogleMap map) {

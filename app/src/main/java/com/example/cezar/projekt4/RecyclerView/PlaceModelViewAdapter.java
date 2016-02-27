@@ -4,6 +4,8 @@ package com.example.cezar.projekt4.RecyclerView;
  * Created by Marcin on 27.02.2016.
  */
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class PlaceModelViewAdapter extends RecyclerView.Adapter<PlaceModelHolder> {
 
     private final ArrayList<Marker> itemsList;
+    private Context activity;
 
     public PlaceModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = itemsList;
@@ -29,6 +32,7 @@ public class PlaceModelViewAdapter extends RecyclerView.Adapter<PlaceModelHolder
     @Override
     public PlaceModelHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        activity = parent.getContext();
         final View view = inflater.inflate(R.layout.place_item, null);
         return new PlaceModelHolder(view);
 
@@ -45,6 +49,8 @@ public class PlaceModelViewAdapter extends RecyclerView.Adapter<PlaceModelHolder
         Ion.with(holder.iconView)
                 .transform(new CircularTransform())
                 .load(item.getImg_url());
+
+        holder.setMarker(item, activity);
     }
 
     @Override

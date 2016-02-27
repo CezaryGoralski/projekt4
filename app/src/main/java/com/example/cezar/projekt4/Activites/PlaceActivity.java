@@ -41,7 +41,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_place);
 
-        marker = savedInstanceState.getParcelable("marker");
+        marker = getIntent().getExtras().getParcelable("marker");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
