@@ -60,6 +60,10 @@
             android:parentActivityName=".Activites.MapsActivity1"
             android:label="Lists"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Activites.NewListChooser"
+            android:parentActivityName=".Activites.MapsActivity1"
+            android:label="Add new list"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activites.AddMarkerActivity"
             android:label="Add place"
             android:screenOrientation="portrait"/>

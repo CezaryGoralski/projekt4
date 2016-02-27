@@ -21,6 +21,7 @@ import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.R;
+import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -49,6 +50,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -342,6 +344,25 @@ public class MapsActivity1 extends AppCompatActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_new) {
+            Marker.readMarkers();
+
+            Intent intent = new Intent(this, NewListChooser.class);
+            intent.putExtra("markers", Marker.getList());
+            startActivity(new Intent(this, NewListChooser.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onMapReady(GoogleMap map) {
         map.setMyLocationEnabled(true);
         map.setOnMyLocationButtonClickListener(this);
@@ -478,14 +499,6 @@ public class MapsActivity1 extends AppCompatActivity
 
             }
         });
-
-
-
-
-
-
-           ;
-
     }
 
 
@@ -554,7 +567,7 @@ public class MapsActivity1 extends AppCompatActivity
       }
 
     public void showPlaces() {
-        Intent openSecondActivity = new Intent(this,PlacesActivity.class);
+        Intent openSecondActivity = new Intent(this, PlacesActivity.class);
         if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
             openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
             openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
