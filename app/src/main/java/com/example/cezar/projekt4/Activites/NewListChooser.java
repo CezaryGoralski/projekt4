@@ -14,7 +14,6 @@ import android.support.v7.widget.SearchView;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
-import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.example.cezar.projekt4.RecyclerView.SelectablePlaceModelViewAdapter;
 
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         });
 
         Marker.readMarkers();
-
         mMarkers = Marker.getList();
 
         placeModelViewAdapter = new SelectablePlaceModelViewAdapter(mMarkers);
@@ -89,15 +87,18 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         query = query.toLowerCase();
 
         final List<Marker> filteredModelList = new ArrayList<>();
-        for (Marker model : models) {
-            final String name = model.getName().toLowerCase();
-            final String address = model.getAddress().toLowerCase();
-            final String category = model.getCategory().toLowerCase();
+        if(models != null){
+            for (Marker model : models) {
+                final String name = model.getName().toLowerCase();
+                final String address = model.getAddress().toLowerCase();
+                final String category = model.getCategory().toLowerCase();
 
-            if (name.contains(query) || address.contains(query) || category.contains(query)) {
-                filteredModelList.add(model);
+                if (name.contains(query) || address.contains(query) || category.contains(query)) {
+                    filteredModelList.add(model);
+                }
             }
         }
+
         return filteredModelList;
     }
 }

@@ -24,7 +24,7 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
     private Context activity;
 
     public SelectablePlaceModelViewAdapter(ArrayList<Marker> itemsList) {
-        this.itemsList = itemsList;
+        this.itemsList = new ArrayList<>(itemsList);
     }
 
     @Override

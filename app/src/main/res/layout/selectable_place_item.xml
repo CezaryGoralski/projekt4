@@ -24,7 +24,7 @@
             android:id="@+id/selected_checkbox"
             android:layout_gravity="center_vertical"
             android:checked="false"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="6dp" />
 
         <RelativeLayout
             android:layout_width="60dp"
