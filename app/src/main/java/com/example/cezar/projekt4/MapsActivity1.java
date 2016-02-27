@@ -108,7 +108,7 @@ public class MapsActivity1 extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps1);
-        mMessageView = (TextView) findViewById(R.id.message_text);
+        //mMessageView = (TextView) findViewById(R.id.message_text);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
