@@ -38,7 +38,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Geocoder;
@@ -46,7 +45,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;

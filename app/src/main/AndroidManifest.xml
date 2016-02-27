@@ -53,10 +53,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activites.ListActivity"
-            android:label="Marker List"
+            android:label="Places"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activites.AddMarkerActivity"
-            android:label="Add Marker"
+            android:label="Add place"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activites.PlaceActivity"
             android:parentActivityName=".Activites.MapsActivity1"

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 
 import com.example.cezar.projekt4.Markers.Marker;
@@ -23,6 +25,10 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_list_list);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         Marker.readMarkers();
@@ -32,15 +38,14 @@ public class ListActivity extends AppCompatActivity {
         mylist.setLayoutManager(new LinearLayoutManager(this));
         mylist.addItemDecoration(new DividerItemDecoration(this));
 
-        //  adapter = new ArrayAdapter<Product>(this,android.R.layout.simple_list_item_1,itemList);*/
         mylist.setAdapter(adapter);
-    /*    try {
-            new DownloadList().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.list_menu, menu);
+        return true;
     }
 
     public void openMap(View view) {
