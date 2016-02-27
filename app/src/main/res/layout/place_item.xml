@@ -79,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="typ miejsca"
+                            android:text="kategoria"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                             android:theme="@style/Base.TextAppearance.AppCompat.Small"
                             android:layout_marginRight="4dp" />
