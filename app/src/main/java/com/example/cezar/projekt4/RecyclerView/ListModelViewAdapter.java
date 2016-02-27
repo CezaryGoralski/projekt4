@@ -38,7 +38,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
 
         String flex;
 
-        switch(item.getNumberOfPlaces()){
+        switch (item.getNumberOfPlaces()) {
             case 1:
                 flex = "miejsce";
                 break;

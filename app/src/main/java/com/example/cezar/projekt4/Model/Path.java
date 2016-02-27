@@ -1,7 +1,5 @@
 package com.example.cezar.projekt4.Model;
 
-import java.util.Date;
-
 /**
  * Created by Kuba on 13.12.2015.
  */
@@ -9,7 +7,6 @@ import java.util.Date;
 @lombok.Setter
 @lombok.ToString
 public class Path {
-
 
 
     private long id;

@@ -14,7 +14,6 @@ public class Node {
     private int group;
 
 
-
     public int getGroup() {
         return group;
     }
@@ -39,7 +38,7 @@ public class Node {
         this.cost = cost;
     }
 
-    public Node(String label, int group){
+    public Node(String label, int group) {
         this.label = label;
         this.group = group;
     }
@@ -50,7 +49,7 @@ public class Node {
                 + "]";
     }
 
-    public void addEdge(Edge edge){
+    public void addEdge(Edge edge) {
         edges.add(edge);
     }
 
@@ -69,7 +68,6 @@ public class Node {
     public void setEdges(ArrayList<Edge> edges) {
         this.edges = edges;
     }
-
 
 
 }

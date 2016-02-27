@@ -3,11 +3,11 @@ package com.example.cezar.projekt4.Markers;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;
+import com.example.cezar.projekt4.Model.Path;
 import com.example.cezar.projekt4.Model.algorithm.Edge;
 import com.example.cezar.projekt4.Model.algorithm.EdgeComparator;
-import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;
 import com.example.cezar.projekt4.Model.algorithm.Node;
-import com.example.cezar.projekt4.Model.Path;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +27,7 @@ import java.util.TreeMap;
 @lombok.Getter
 @lombok.Setter
 @lombok.ToString
-public class Marker implements Serializable{
+public class Marker implements Serializable {
     private static ArrayList<Marker> list = new ArrayList<Marker>();
     private double lognitude;
     private double latitude;
@@ -46,8 +46,8 @@ public class Marker implements Serializable{
     public static ArrayList<Marker> getToDoList() {
         ArrayList<Marker> toDoList = new ArrayList<Marker>();
 
-        for (Marker m: getList()) {
-            if(!m.isVisited()){
+        for (Marker m : getList()) {
+            if (!m.isVisited()) {
                 toDoList.add(m);
             }
 
@@ -74,58 +74,52 @@ public class Marker implements Serializable{
     }
 
 
-
-    public static void writeMarkers(){
-        try
-        {
-            File file = new File(Environment.getExternalStorageDirectory()  + File.separator + "markers.ser");
-        //    if(!file.exists()) {
-                file.createNewFile();
-                Log.e("msg","file created");
-      //      }
+    public static void writeMarkers() {
+        try {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "markers.ser");
+            //    if(!file.exists()) {
+            file.createNewFile();
+            Log.e("msg", "file created");
+            //      }
             FileOutputStream fileOut =
                     new FileOutputStream(file, false);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for(Marker m: list)
+            for (Marker m : list)
                 out.writeObject(m);
             out.close();
             fileOut.close();
             System.out.printf("Serialized data is saved in markers.ser");
-        }catch(IOException i)
-        {
+        } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
-    public static void readTestMarkers(){
+    public static void readTestMarkers() {
 
-      list.add(new Marker(52.01, 52.01, "1", "1"));
-        list.add(new Marker(52.01,53.01,"2","2"));
-        list.add(new Marker(51.01,53.01,"3","3"));
+        list.add(new Marker(52.01, 52.01, "1", "1"));
+        list.add(new Marker(52.01, 53.01, "2", "2"));
+        list.add(new Marker(51.01, 53.01, "3", "3"));
     }
 
-    public static void readMarkers(){
+    public static void readMarkers() {
         File f = new File(Environment.getExternalStorageDirectory() + File.separator + "markers.ser");
-        if(!f.exists()){
-            try
-            {
+        if (!f.exists()) {
+            try {
 
                 FileInputStream fileIn = new FileInputStream(f);
 
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                Marker m = (Marker)in.readObject();
-                while(m != null) {
+                Marker m = (Marker) in.readObject();
+                while (m != null) {
                     list.add(m);
                     m = (Marker) in.readObject();
                 }
                 in.close();
                 fileIn.close();
-            }catch(IOException i)
-            {
+            } catch (IOException i) {
                 i.printStackTrace();
                 return;
-            }catch(ClassNotFoundException c)
-            {
+            } catch (ClassNotFoundException c) {
                 System.out.println("Markers class not found");
                 c.printStackTrace();
                 return;
@@ -133,25 +127,25 @@ public class Marker implements Serializable{
         }
     }
 
-    public static void markAsVisited(String name){
-        for(Marker m : list){
-            if(m.getName().equals(name)){
+    public static void markAsVisited(String name) {
+        for (Marker m : list) {
+            if (m.getName().equals(name)) {
                 m.setVisited(true);
                 break;
             }
         }
     }
 
-    public static void clearMarkers(){
+    public static void clearMarkers() {
         list = new ArrayList<Marker>();
     }
 
 
-    public static ArrayList<Marker> executeKruskal(){
+    public static ArrayList<Marker> executeKruskal() {
         //readMarkers();
         ArrayList<Marker> markers = Marker.getToDoList();
         System.out.println("size = " + markers.size());
-        if(markers.size() > 1) {
+        if (markers.size() > 1) {
             TreeMap<String, Marker> markersMap = new TreeMap<String, Marker>();
 
             for (Marker m : markers) {
@@ -228,7 +222,7 @@ public class Marker implements Serializable{
 
 
             return markesAfterKruskal;
-        }else
+        } else
             return markers;
     }
 
@@ -240,11 +234,11 @@ public class Marker implements Serializable{
         this.adress = adress;
     }
 
-    public static void  convertToMarkers(List<Path> lista){
+    public static void convertToMarkers(List<Path> lista) {
         clearMarkers();
         ArrayList<Marker> newlist = new ArrayList<Marker>();
         System.out.println("ConvertToMarkers");
-        for(Path path : lista){
+        for (Path path : lista) {
             System.out.println(path.getId());
             Marker marker = new Marker(String.valueOf(path.getId()));
             marker.setAdress(path.getAdress());

@@ -16,11 +16,25 @@
 
 package com.example.cezar.projekt4.Activites;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.Model.Path;
-import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.Model.Paths;
+import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,20 +52,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.location.Geocoder;
-import android.location.Location;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -147,19 +147,19 @@ public class MapsActivity1 extends FragmentActivity
          */
 
 
-  //      readTaskk.execute(url);
+        //      readTaskk.execute(url);
 
     }
 
     private String getMapsApiDirectionsUrl() {
 
-        String origin ="origin=" + LOWER_MANHATTAN.latitude + "," + LOWER_MANHATTAN.longitude;
-        String destination = "destination="  + WALL_STREET.latitude + "," + WALL_STREET.longitude;
+        String origin = "origin=" + LOWER_MANHATTAN.latitude + "," + LOWER_MANHATTAN.longitude;
+        String destination = "destination=" + WALL_STREET.latitude + "," + WALL_STREET.longitude;
         String waypoints = "waypoints=optimize:true|" + BROOKLYN_BRIDGE.latitude + ","
                 + BROOKLYN_BRIDGE.longitude;
 
         String sensor = "sensor=false";
-        String params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+        String params = origin + "&" + destination + "&" + waypoints + "&" + sensor;
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/"
                 + output + "?" + params;
@@ -171,23 +171,23 @@ public class MapsActivity1 extends FragmentActivity
 
         String url = null;
         Log.e("size", String.valueOf(markersList.size()));
-        if(markersList.size() > 0) {
-           // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+        if (markersList.size() > 0) {
+            // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
             String origin = "origin=" + latitude + "," + lognitude;
-            String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+            String destination = "destination=" + markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
             String sensor = "sensor=false";
             String output = "json";
-            String params = origin + "&"+ destination +"&" + sensor;
-           // markersList.remove(0);
+            String params = origin + "&" + destination + "&" + sensor;
+            // markersList.remove(0);
             markersList.remove(markersList.size() - 1);
-            if(markersList.size() > 0 ){
+            if (markersList.size() > 0) {
                 String waypoints = "waypoints=optimize:true";
-                for(Marker m: markersList){
+                for (Marker m : markersList) {
                     waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLognitude();
                 }
-                params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+                params = origin + "&" + destination + "&" + waypoints + "&" + sensor;
             }
-           url = "https://maps.googleapis.com/maps/api/directions/"
+            url = "https://maps.googleapis.com/maps/api/directions/"
                     + output + "?" + params;
         }
         System.out.println(url);
@@ -204,7 +204,7 @@ public class MapsActivity1 extends FragmentActivity
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
-            Log.e("data","data readed");
+            Log.e("data", "data readed");
             return data;
         }
 
@@ -254,9 +254,9 @@ public class MapsActivity1 extends FragmentActivity
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-                 //   Log.e("data", position.toString());
+                    //   Log.e("data", position.toString());
                     points.add(position);
-                  //  mypoints.add(position);
+                    //  mypoints.add(position);
                 }
 
                 polyLineOptions.addAll(points);
@@ -268,10 +268,8 @@ public class MapsActivity1 extends FragmentActivity
 
         }
 
-    //    Intent loginIntent = new Intent(this, LoginActivity.class);
-    //    startActivity(loginIntent);
-
-
+        //    Intent loginIntent = new Intent(this, LoginActivity.class);
+        //    startActivity(loginIntent);
 
 
     }
@@ -307,12 +305,13 @@ public class MapsActivity1 extends FragmentActivity
                 e.printStackTrace();
             }
             System.out.println(ordersDto[0]);
-            if(ordersDto != null)
+            if (ordersDto != null)
                 return ordersDto[0].getPlaces();
             else
                 return null;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -331,7 +330,6 @@ public class MapsActivity1 extends FragmentActivity
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -371,7 +369,7 @@ public class MapsActivity1 extends FragmentActivity
         Marker.readMarkers();
         //rysowanie
         mapa = map;
-        if(refresh) {
+        if (refresh) {
             refresh = false;
 
 
@@ -386,9 +384,9 @@ public class MapsActivity1 extends FragmentActivity
                 e.printStackTrace();
             }
 
-            if(paths != null)
+            if (paths != null)
                 Marker.convertToMarkers(paths);
-                System.out.println("after convert");
+            System.out.println("after convert");
 /*
             for (Marker m : Marker.getList()) {
                 System.out.println (m.getName());
@@ -411,15 +409,14 @@ public class MapsActivity1 extends FragmentActivity
         }
 
 
-
-        for(Marker m: Marker.getToDoList()){
+        for (Marker m : Marker.getToDoList()) {
             MarkerOptions marketOption = new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLognitude()))
                     .title(m.getName());
-            com.google.android.gms.maps.model.Marker mapMarker =   map.addMarker(marketOption);
+            com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
         }
-        if(Marker.getToDoList().size() > 1) {
+        if (Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
             ReadTask readTask = null;
             try {
@@ -451,7 +448,7 @@ public class MapsActivity1 extends FragmentActivity
         Log.e("data",String.valueOf(mypoints.size()));
         map.addPolyline(new PolylineOptions().addAll(mypoints).width(5).color(Color.RED));*/
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-//dupa
+            //dupa
             @Override
             public void onMapLongClick(LatLng latLng) {
                 for (com.google.android.gms.maps.model.Marker marker : markersList) {
@@ -472,85 +469,82 @@ public class MapsActivity1 extends FragmentActivity
         });
 
 
-
-
-
-
-           ;
+        ;
 
     }
 
 
-      /**
-       * Button to get current Location. This demonstrates how to get the current Location as required
-       * without needing to register a LocationListener.
-       */
-      public void showMyLocation(View view) {
-          if (mGoogleApiClient.isConnected()) {
-              String msg = "Location = "
-                      + LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-              Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-          }
-      }
+    /**
+     * Button to get current Location. This demonstrates how to get the current Location as required
+     * without needing to register a LocationListener.
+     */
+    public void showMyLocation(View view) {
+        if (mGoogleApiClient.isConnected()) {
+            String msg = "Location = "
+                    + LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-      /**
-       * Implementation of {@link LocationListener}.
-       */
-      @Override
-      public void onLocationChanged(Location location) {
-          //mMessageView.setText("Location = " + location);
-      }
+    /**
+     * Implementation of {@link LocationListener}.
+     */
+    @Override
+    public void onLocationChanged(Location location) {
+        //mMessageView.setText("Location = " + location);
+    }
 
-      /**
-       * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
-       */
-      @Override
-      public void onConnected(Bundle connectionHint) {
-          LocationServices.FusedLocationApi.requestLocationUpdates(
-                  mGoogleApiClient,
-                  REQUEST,
-                  this);  // LocationListener
-      }
+    /**
+     * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
+     */
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient,
+                REQUEST,
+                this);  // LocationListener
+    }
 
-      /**
-       * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
-       */
-      @Override
-      public void onConnectionSuspended(int cause) {
-          // Do nothing
-      }
+    /**
+     * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
+     */
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // Do nothing
+    }
 
-      /**
-       * Implementation of {@link OnConnectionFailedListener}.
-       */
-      @Override
-      public void onConnectionFailed(ConnectionResult result) {
-          // Do nothing
-      }
+    /**
+     * Implementation of {@link OnConnectionFailedListener}.
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        // Do nothing
+    }
 
-      @Override
-      public boolean onMyLocationButtonClick() {
-          Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-          // Return false so that we don't consume the event and the default behavior still occurs
-          // (the camera animates to the user's current position).
-          return false;
-      }
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
 
 
-      public void refreshMarkers() {
-          Intent openSecondActivity = new Intent(this, MapsActivity1.class);
-          openSecondActivity.putExtra("refresh", true);
-          openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
-          openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
-          startActivity(openSecondActivity);
-      }
+    public void refreshMarkers() {
+        Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+        openSecondActivity.putExtra("refresh", true);
+        openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+        openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
+        startActivity(openSecondActivity);
+    }
+
     public void showList() {
-        Intent openSecondActivity = new Intent(this,ListActivity.class);
-        if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
+        Intent openSecondActivity = new Intent(this, ListActivity.class);
+        if (LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
             openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
             openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
         }
         startActivity(openSecondActivity);
 
     }
-  }
+}

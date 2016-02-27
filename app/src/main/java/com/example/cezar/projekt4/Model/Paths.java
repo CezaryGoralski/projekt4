@@ -1,7 +1,5 @@
 package com.example.cezar.projekt4.Model;
 
-import com.example.cezar.projekt4.Model.Path;
-
 import java.util.List;
 
 /**

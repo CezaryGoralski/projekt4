@@ -3,15 +3,16 @@ package com.example.cezar.projekt4;
 /**
  * Created by Cezar on 2015-12-12.
  */
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gms.maps.model.LatLng;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PathJSONParser {
 
@@ -63,7 +64,7 @@ public class PathJSONParser {
      * Method Courtesy :
      * jeffreysambells.com/2010/05/27
      * /decoding-polylines-from-google-maps-direction-api-with-java
-     * */
+     */
     private List<LatLng> decodePoly(String encoded) {
 
         List<LatLng> poly = new ArrayList<LatLng>();

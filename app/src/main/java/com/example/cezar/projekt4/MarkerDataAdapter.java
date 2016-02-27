@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class MarkerDataAdapter extends ArrayAdapter<Marker> {
 
-    public MarkerDataAdapter (Context context, ArrayList<Marker> markers) {
+    public MarkerDataAdapter(Context context, ArrayList<Marker> markers) {
         super(context, 0, markers);
     }
 
