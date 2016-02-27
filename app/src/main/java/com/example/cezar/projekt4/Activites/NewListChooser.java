@@ -76,7 +76,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         placeModelViewAdapter.animateTo(filteredModelList);
         mylist.scrollToPosition(0);
 
-        return false;
+        return true;
     }
 
     @Override
