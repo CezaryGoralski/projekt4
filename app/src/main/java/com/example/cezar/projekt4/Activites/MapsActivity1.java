@@ -47,6 +47,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -74,7 +76,7 @@ import java.util.concurrent.ExecutionException;
  * track changes to the users location on the map, we request updates from the
  * {@link com.google.android.gms.location.FusedLocationProviderApi}.
  */
-public class MapsActivity1 extends FragmentActivity
+public class MapsActivity1 extends AppCompatActivity
         implements
         ConnectionCallbacks,
         OnConnectionFailedListener,
@@ -109,7 +111,9 @@ public class MapsActivity1 extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps1);
-        //mMessageView = (TextView) findViewById(R.id.message_text);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
