@@ -21,7 +21,6 @@ import java.util.List;
 public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<SelectablePlaceModelHolder> {
 
     private final ArrayList<Marker> itemsList;
-    private Context activity;
 
     public SelectablePlaceModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = new ArrayList<>(itemsList);
@@ -30,7 +29,6 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
     @Override
     public SelectablePlaceModelHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        activity = parent.getContext();
         final View view = inflater.inflate(R.layout.selectable_place_item, null);
         return new SelectablePlaceModelHolder(view);
 

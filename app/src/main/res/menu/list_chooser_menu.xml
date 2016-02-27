@@ -4,7 +4,6 @@
 
     <item android:id="@+id/action_next"
         android:title="Next"
-        app:actionViewClass="android.support.v7.widget.SearchView"
         android:orderInCategory="200"
         app:showAsAction="always"/>
 
