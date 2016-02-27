@@ -38,7 +38,7 @@
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="172dp"
+                    android:layout_height="192dp"
                     android:layout_alignParentTop="true"
                     android:background="#32000000"
                     android:layout_centerHorizontal="true">
@@ -315,16 +315,6 @@
                     </RelativeLayout>
 
                 </LinearLayout>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DODAJ"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:id="@+id/add_button" />
 
             </LinearLayout>
 
