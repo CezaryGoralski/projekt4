@@ -546,7 +546,7 @@ public class MapsActivity1 extends AppCompatActivity
           startActivity(openSecondActivity);
       }
     public void showList() {
-        Intent openSecondActivity = new Intent(this,ListActivity.class);
+        Intent openSecondActivity = new Intent(this,PlacesActivity.class);
         if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
             openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
             openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
