@@ -3,29 +3,36 @@ package com.example.cezar.projekt4.Activites;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.MarkerDataAdapter;
 import com.example.cezar.projekt4.R;
+import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
+import com.example.cezar.projekt4.RecyclerView.ListModelViewAdapter;
 
 
 public class ListActivity extends AppCompatActivity {
     private double latitude;
     private double lognitude;
-    private ListView mylist;
+    private RecyclerView mylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.layout_list_list);
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         Marker.readMarkers();
-        MarkerDataAdapter adapter = new MarkerDataAdapter(this, Marker.getList());
+        ListModelViewAdapter adapter = new ListModelViewAdapter(Marker.getList());
 
-        mylist = (ListView) findViewById(R.id.listView);
+        mylist = (RecyclerView) findViewById(R.id.lists);
+        mylist.setLayoutManager(new LinearLayoutManager(this));
+        mylist.addItemDecoration(new DividerItemDecoration(this));
+
         //  adapter = new ArrayAdapter<Product>(this,android.R.layout.simple_list_item_1,itemList);*/
         mylist.setAdapter(adapter);
     /*    try {

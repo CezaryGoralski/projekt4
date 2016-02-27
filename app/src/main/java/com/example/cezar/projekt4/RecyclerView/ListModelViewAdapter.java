@@ -9,16 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cezar.projekt4.Model.ListModel;
+import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
 
 import java.util.ArrayList;
 
 public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> {
 
-    private final ArrayList<ListModel> itemsList;
+    private final ArrayList<Marker> itemsList;
 
-    public ListModelViewAdapter(ArrayList<ListModel> itemsList) {
+    public ListModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = itemsList;
     }
 
@@ -31,7 +31,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
 
     @Override
     public void onBindViewHolder(ListModelHolder holder, final int position) {
-        final ListModel item = itemsList.get(position);
+        final Marker item = itemsList.get(position);
 
         holder.nameTextView.setText(item.getName());
         holder.descriptionTextView.setText(item.getDescription());

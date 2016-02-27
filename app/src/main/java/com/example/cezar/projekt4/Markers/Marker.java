@@ -24,6 +24,9 @@ import java.util.TreeMap;
 /**
  * Created by Cezar on 2015-12-07.
  */
+@lombok.Getter
+@lombok.Setter
+@lombok.ToString
 public class Marker implements Serializable{
     private static ArrayList<Marker> list = new ArrayList<Marker>();
     private double lognitude;
@@ -31,14 +34,7 @@ public class Marker implements Serializable{
     private String description;
     private String name;
     private String adress;
-
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
-    }
+    private int numberOfPlaces;
 
     private boolean visited;
 
@@ -78,37 +74,6 @@ public class Marker implements Serializable{
     }
 
 
-    public double getLognitude() {
-        return lognitude;
-    }
-
-    public void setLognitude(double lognitude) {
-        this.lognitude = lognitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public static void writeMarkers(){
         try
