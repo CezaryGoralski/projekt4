@@ -8,14 +8,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cezar.projekt4.ImageTransform.CircularTransform;
+import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
-
-import org.w3c.dom.Text;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.koushikdutta.ion.Ion;
 
 /**
  * Created by Marcin on 27.02.2016.
  */
-public class PlaceActivity extends AppCompatActivity {
+public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextView titleTextView,
             descriptionTextView,
@@ -26,10 +34,14 @@ public class PlaceActivity extends AppCompatActivity {
 
     private ImageView headerImage;
 
+    private Marker marker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_place);
+
+        marker = savedInstanceState.getParcelable("marker");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -43,6 +55,12 @@ public class PlaceActivity extends AppCompatActivity {
             }
         });
 
+        MapView map = (MapView) findViewById(R.id.map);
+        map.getMapAsync(this);
+        map.onCreate(savedInstanceState);
+
+        MapsInitializer.initialize(this);
+
         titleTextView = (TextView) findViewById(R.id.place_title);
         descriptionTextView = (TextView) findViewById(R.id.description_text);
         categoryTextView = (TextView) findViewById(R.id.category_test);
@@ -51,6 +69,17 @@ public class PlaceActivity extends AppCompatActivity {
         timeTwoTextView = (TextView) findViewById(R.id.weekend_hours);
 
         headerImage = (ImageView) findViewById(R.id.circular_header);
+
+        titleTextView.setText(marker.getName());
+        descriptionTextView.setText(marker.getDescription());
+        categoryTextView.setText(marker.getCategory());
+        addressTextView.setText(marker.getAddress());
+        timeTwoTextView.setText("09:00 - 16:00");
+        timeOneTextView.setText("08:00 - 20:00");
+
+        Ion.with(headerImage)
+                .transform(new CircularTransform())
+                .load(marker.getImg_url());
     }
 
     @Override
@@ -58,5 +87,17 @@ public class PlaceActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.place_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+
+        LatLng warszau = new LatLng(marker.getLatitude(), marker.getLongitude());
+        googleMap.addMarker(new MarkerOptions()
+                .position(warszau)
+                .title(marker.getName())
+                .snippet(marker.getAddress()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(warszau, 14));
     }
 }
