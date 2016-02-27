@@ -45,7 +45,9 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
             }
         });
 
-        mMarkers = (ArrayList<Marker>) getIntent().getSerializableExtra("markers");
+        Marker.readMarkers();
+
+        mMarkers = Marker.getList();
 
         placeModelViewAdapter = new PlaceModelViewAdapter(mMarkers);
 

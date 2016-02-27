@@ -352,10 +352,6 @@ public class MapsActivity1 extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new) {
-            Marker.readMarkers();
-
-            Intent intent = new Intent(this, NewListChooser.class);
-            intent.putExtra("markers", Marker.getList());
             startActivity(new Intent(this, NewListChooser.class));
         }
 
