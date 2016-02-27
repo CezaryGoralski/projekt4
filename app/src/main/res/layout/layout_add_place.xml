@@ -109,7 +109,7 @@
                     android:layout_marginBottom="18dp" >
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/description_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_venue"
@@ -135,7 +135,7 @@
                             android:layout_height="wrap_content"
                             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris."
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                            android:id="@+id/textView6"
+                            android:id="@+id/description_text"
                             android:layout_below="@+id/textView5"
                             android:textColor="@color/secondary_text_default_material_light"
                             android:singleLine="false" />
@@ -150,7 +150,7 @@
                     android:layout_marginBottom="18dp" >
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/catgory_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_info"
@@ -176,7 +176,7 @@
                             android:layout_height="wrap_content"
                             android:text="Muzeum"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                            android:id="@+id/textView8"
+                            android:id="@+id/category_test"
                             android:layout_below="@+id/textView7"
                             android:textColor="@color/secondary_text_default_material_light"
                             android:singleLine="false" />
@@ -191,7 +191,7 @@
                     android:layout_marginBottom="18dp" >
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/place_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_place"
@@ -217,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:text="ul. Ludwika Narbutta 56"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                            android:id="@+id/textView4"
+                            android:id="@+id/address_text"
                             android:layout_below="@+id/textView3"
                             android:textColor="@color/secondary_text_default_material_light"
                             android:singleLine="false" />
@@ -232,7 +232,7 @@
                     android:layout_marginBottom="6dp">
 
                     <ImageView
-                        android:id="@+id/second_icon"
+                        android:id="@+id/time_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_time"
@@ -266,7 +266,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Tydzień:"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:id="@+id/description"
+                                android:id="@+id/week_header"
                                 android:textColor="@color/secondary_text_default_material_light"
                                 android:singleLine="false"
                                 android:layout_marginRight="8dp" />
@@ -276,7 +276,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="09:00 - 18:00"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:id="@+id/description2"
+                                android:id="@+id/week_hours"
                                 android:textColor="@color/secondary_text_default_material_light"
                                 android:singleLine="false"
                                 android:textStyle="bold" />
@@ -295,7 +295,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Weekend:"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:id="@+id/description_one"
+                                android:id="@+id/weekend_header"
                                 android:textColor="@color/secondary_text_default_material_light"
                                 android:singleLine="false"
                                 android:layout_marginRight="8dp" />
@@ -305,7 +305,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="09:00 - 15:00"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:id="@+id/description3"
+                                android:id="@+id/weekend_hours"
                                 android:textColor="@color/secondary_text_default_material_light"
                                 android:singleLine="false"
                                 android:textStyle="bold" />
@@ -323,7 +323,8 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/add_button" />
 
             </LinearLayout>
 
