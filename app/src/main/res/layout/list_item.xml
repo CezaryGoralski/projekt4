@@ -55,8 +55,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="odwiedzona"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                        android:theme="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="#8BC34A"
                         android:layout_marginRight="4dp" />
 
