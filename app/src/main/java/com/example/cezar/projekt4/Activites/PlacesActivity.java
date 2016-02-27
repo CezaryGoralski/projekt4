@@ -39,6 +39,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
+
         Marker.readMarkers();
         PlaceModelViewAdapter adapter = new PlaceModelViewAdapter(Marker.getList());
 

@@ -122,7 +122,7 @@ public class MapsActivity1 extends AppCompatActivity
         });
 
         FloatingActionButton listFab = (FloatingActionButton) findViewById(R.id.fabLists);
-        fab.setOnClickListener(new View.OnClickListener() {
+        listFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLists();
