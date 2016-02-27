@@ -46,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/list_done"
@@ -55,7 +56,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="odwiedzona"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="#8BC34A"
                         android:layout_marginRight="4dp" />
 
@@ -85,14 +86,15 @@
                 android:id="@+id/list_item_number_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/list_description">
+                android:layout_below="@+id/list_description"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:id="@+id/icon_place"
                     android:src="@drawable/ic_place"
-                    android:layout_marginRight="4dp" />
+                    android:layout_marginRight="2dp" />
 
                 <TextView
                     android:id="@+id/list_item_number"

@@ -1,8 +1,5 @@
 package com.example.cezar.projekt4;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 /*
 import retrofit.Call;
 import retrofit.http.Body;

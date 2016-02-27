@@ -1,8 +1,8 @@
 package com.example.cezar.projekt4.Activites;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
@@ -31,8 +31,8 @@ public class AddMarkerActivity extends AppCompatActivity {
 
     public void addMarker(View view) {
         String name = String.valueOf(markerNameText.getText());
-        String description =  String.valueOf(markerDescriptionText.getText());
-        new Marker(lognitude,latitude,description,name);
+        String description = String.valueOf(markerDescriptionText.getText());
+        new Marker(lognitude, latitude, description, name);
 
         Marker.writeMarkers();
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
@@ -42,7 +42,7 @@ public class AddMarkerActivity extends AppCompatActivity {
 
     }
 
-    public void clearList(View view){
+    public void clearList(View view) {
         Marker.clearMarkers();
         Marker.writeMarkers();
 
