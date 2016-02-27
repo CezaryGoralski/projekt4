@@ -36,7 +36,7 @@ public class MarkerDataAdapter extends ArrayAdapter<Marker> {
         // Populate the data into the template view using the data object
         mName.setText(marker.getName());
 
-        mLagnitude.setText(String.valueOf(marker.getAdress()));
+        mLagnitude.setText(String.valueOf(marker.getAddress()));
         mDescription.setText(marker.getDescription());
         mVisited.setText(String.valueOf(marker.isVisited()));
         // Return the completed view to render on screen

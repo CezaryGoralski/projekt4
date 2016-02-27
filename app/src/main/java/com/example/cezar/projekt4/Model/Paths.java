@@ -1,5 +1,6 @@
 package com.example.cezar.projekt4.Model;
 
+import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.Model.Path;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @lombok.ToString
 public class Paths {
     private Long id;
-    private List<Path> places;
+    private List<Marker> places;
     private String name;
 
 }

@@ -13,6 +13,7 @@ import com.example.cezar.projekt4.MarkerDataAdapter;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
 import com.example.cezar.projekt4.RecyclerView.ListModelViewAdapter;
+import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 
 
 public class ListActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class ListActivity extends AppCompatActivity {
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         Marker.readMarkers();
-        ListModelViewAdapter adapter = new ListModelViewAdapter(Marker.getList());
+        PlaceModelViewAdapter adapter = new PlaceModelViewAdapter(Marker.getList());
 
         mylist = (RecyclerView) findViewById(R.id.lists);
         mylist.setLayoutManager(new LinearLayoutManager(this));

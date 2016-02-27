@@ -18,7 +18,6 @@ package com.example.cezar.projekt4.Activites;
 
 import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.Path;
 import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.R;
@@ -172,9 +171,9 @@ public class MapsActivity1 extends FragmentActivity
         String url = null;
         Log.e("size", String.valueOf(markersList.size()));
         if(markersList.size() > 0) {
-           // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+           // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String origin = "origin=" + latitude + "," + lognitude;
-            String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLognitude();
+            String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
             String params = origin + "&"+ destination +"&" + sensor;
@@ -183,7 +182,7 @@ public class MapsActivity1 extends FragmentActivity
             if(markersList.size() > 0 ){
                 String waypoints = "waypoints=optimize:true";
                 for(Marker m: markersList){
-                    waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLognitude();
+                    waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLongitude();
                 }
                 params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
             }
@@ -277,10 +276,10 @@ public class MapsActivity1 extends FragmentActivity
     }
 
 
-    private class DownloadList extends AsyncTask<Void, Void, List<Path>> {
+    private class DownloadList extends AsyncTask<Void, Void, List<Marker>> {
 
         @Override
-        protected List<Path> doInBackground(Void... params) {
+        protected List<Marker> doInBackground(Void... params) {
             System.out.println("pobieranie danych");
             URL url = null;
             try {
@@ -375,7 +374,7 @@ public class MapsActivity1 extends FragmentActivity
             refresh = false;
 
 
-            List<Path> paths = null;
+            List<Marker> paths = null;
 
 
             try {
@@ -387,7 +386,7 @@ public class MapsActivity1 extends FragmentActivity
             }
 
             if(paths != null)
-                Marker.convertToMarkers(paths);
+               Marker.convertToMarkers(paths);
                 System.out.println("after convert");
 /*
             for (Marker m : Marker.getList()) {
@@ -400,7 +399,7 @@ public class MapsActivity1 extends FragmentActivity
 
                    {
                         m.setLatitude(adresses.get(0).getLatitude());
-                        m.setLognitude(adresses.get(0).getLongitude());                }
+                        m.setLongitude(adresses.get(0).getLongitude());                }
 
                         m.setVisited(false);
                     }
@@ -414,7 +413,7 @@ public class MapsActivity1 extends FragmentActivity
 
         for(Marker m: Marker.getToDoList()){
             MarkerOptions marketOption = new MarkerOptions()
-                    .position(new LatLng(m.getLatitude(), m.getLognitude()))
+                    .position(new LatLng(m.getLatitude(), m.getLongitude()))
                     .title(m.getName());
             com.google.android.gms.maps.model.Marker mapMarker =   map.addMarker(marketOption);
             markersList.add(mapMarker);
