@@ -1,24 +1,14 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Activites;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.google.common.io.CharStreams;
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.MarkerDataAdapter;
+import com.example.cezar.projekt4.R;
 
 
 public class ListActivity extends AppCompatActivity {
@@ -62,10 +52,10 @@ public class ListActivity extends AppCompatActivity {
     }
 
 /*
-    private class DownloadList extends AsyncTask<Void, Void, List<RequestOrderDto>> {
+    private class DownloadList extends AsyncTask<Void, Void, List<Path>> {
 
         @Override
-        protected List<RequestOrderDto> doInBackground(Void... params) {
+        protected List<Path> doInBackground(Void... params) {
 
             URL url = null;
             try {
@@ -76,7 +66,7 @@ public class ListActivity extends AppCompatActivity {
 
             Gson gson = new Gson();
 
-            OrderDto[] ordersDto = new OrderDto[0];
+            Paths[] ordersDto = new Paths[0];
 ;
             try {
                 HttpURLConnection connect = (HttpURLConnection) url.openConnection();
@@ -86,7 +76,7 @@ public class ListActivity extends AppCompatActivity {
                 InputStream ios = connect.getInputStream();
 
                 String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
-                ordersDto = gson.fromJson(body, OrderDto[].class);
+                ordersDto = gson.fromJson(body, Paths[].class);
                 ios.close();
             } catch (IOException e) {
                 e.printStackTrace();

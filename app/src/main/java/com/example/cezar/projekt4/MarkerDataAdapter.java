@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.cezar.projekt4.Markers.Marker;
+
 import java.util.ArrayList;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model;
 
 import java.util.Date;
 

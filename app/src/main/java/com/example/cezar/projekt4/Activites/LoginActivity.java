@@ -1,9 +1,8 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Activites;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +28,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import java.io.IOException;
+import com.example.cezar.projekt4.BecServce;
+import com.example.cezar.projekt4.R;
+import com.example.cezar.projekt4.Model.UserDto;
+
 import java.util.ArrayList;
 import java.util.List;
 

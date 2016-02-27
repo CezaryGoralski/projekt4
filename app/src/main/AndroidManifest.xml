@@ -43,7 +43,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity1"
+            android:name=".Activites.MapsActivity1"
             android:label="@string/title_activity_maps1"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -52,10 +52,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity"
+        <activity android:name=".Activites.ListActivity"
             android:label="Marker List"
             android:screenOrientation="portrait"/>
-        <activity android:name=".AddMarkerActivity"
+        <activity android:name=".Activites.AddMarkerActivity"
             android:label="Add Marker"
             android:screenOrientation="portrait"/>
         <!--
@@ -67,16 +67,16 @@
             android:value="@integer/google_play_services_version" />
 
 
-        <activity android:name=".MarkAsVisitedMarker"></activity>
+        <activity android:name=".Activites.MarkAsVisitedMarker"></activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activites.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".MapsActivity1"
+            android:parentActivityName=".Activites.MapsActivity1"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.cezar.projekt4.MapsActivity1" />
+                android:value=".Activites.MapsActivity1" />
         </activity>
 
     </application>

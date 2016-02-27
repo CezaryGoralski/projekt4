@@ -1,4 +1,6 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model;
+
+import com.example.cezar.projekt4.Markers.Marker;
 
 import java.util.Comparator;
 

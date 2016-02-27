@@ -1,4 +1,4 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model;
 
 /**
  * Created by Ruben on 12/12/2015.

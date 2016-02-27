@@ -1,7 +1,13 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Markers;
 
 import android.os.Environment;
 import android.util.Log;
+
+import com.example.cezar.projekt4.Model.algorithm.Edge;
+import com.example.cezar.projekt4.Model.algorithm.EdgeComparator;
+import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;
+import com.example.cezar.projekt4.Model.algorithm.Node;
+import com.example.cezar.projekt4.Model.Path;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -124,6 +130,13 @@ public class Marker implements Serializable{
         {
             i.printStackTrace();
         }
+    }
+
+    public static void readTestMarkers(){
+
+      list.add(new Marker(52.01, 52.01, "1", "1"));
+        list.add(new Marker(52.01,53.01,"2","2"));
+        list.add(new Marker(51.01,53.01,"3","3"));
     }
 
     public static void readMarkers(){
@@ -262,14 +275,16 @@ public class Marker implements Serializable{
         this.adress = adress;
     }
 
-    public static void  convertToMarkers(List<RequestOrderDto> lista){
+    public static void  convertToMarkers(List<Path> lista){
         clearMarkers();
         ArrayList<Marker> newlist = new ArrayList<Marker>();
         System.out.println("ConvertToMarkers");
-        for(RequestOrderDto requestOrderDto: lista){
-            System.out.println(requestOrderDto.getId());
-            Marker marker = new Marker(String.valueOf(requestOrderDto.getId()));
-            marker.setAdress(requestOrderDto.getAddress().getCity() + "," + requestOrderDto.getAddress().getStreet() + " " + requestOrderDto.getAddress().getNumber());
+        for(Path path : lista){
+            System.out.println(path.getId());
+            Marker marker = new Marker(String.valueOf(path.getId()));
+            marker.setAdress(path.getAdress());
+            marker.setLatitude(path.getCoordinates()[0]);
+            marker.setLognitude(path.getCoordinates()[1]);
             newlist.add(marker);
         }
         list = newlist;

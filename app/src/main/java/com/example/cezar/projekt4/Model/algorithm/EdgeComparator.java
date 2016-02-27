@@ -1,4 +1,6 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model.algorithm;
+
+import com.example.cezar.projekt4.Model.algorithm.Edge;
 
 import java.util.Comparator;
 

@@ -1,5 +1,7 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model.algorithm;
 
+
+import com.example.cezar.projekt4.Model.algorithm.Node;
 
 public class Edge {
     private Node beginNode;

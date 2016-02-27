@@ -22,5 +22,5 @@ public interface BecServce {
 
     @GET("/orders")
     @Headers({"Accept: application/json", "Content-Type: application/json"})
-    Call<List<OrderDto>> getOrders();*/
+    Call<List<Paths>> getOrders();*/
 }

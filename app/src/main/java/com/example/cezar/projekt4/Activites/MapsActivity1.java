@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Activites;
 
+import com.example.cezar.projekt4.HttpConnection;
+import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.Path;
+import com.example.cezar.projekt4.PathJSONParser;
+import com.example.cezar.projekt4.Model.Paths;
+import com.example.cezar.projekt4.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -35,22 +41,18 @@ import com.google.gson.Gson;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
-import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,8 +66,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
@@ -276,21 +276,21 @@ public class MapsActivity1 extends FragmentActivity
     }
 
 
-    private class DownloadList extends AsyncTask<Void, Void, List<RequestOrderDto>> {
+    private class DownloadList extends AsyncTask<Void, Void, List<Path>> {
 
         @Override
-        protected List<RequestOrderDto> doInBackground(Void... params) {
-
+        protected List<Path> doInBackground(Void... params) {
+            System.out.println("pobieranie danych");
             URL url = null;
             try {
-                url = new URL("http://2b25146f.ngrok.io/orders");
+                url = new URL("http://52.34.41.87/trips");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
 
             Gson gson = new Gson();
 
-            OrderDto[] ordersDto = new OrderDto[0];
+            Paths[] ordersDto = new Paths[0];
             ;
             try {
                 HttpURLConnection connect = (HttpURLConnection) url.openConnection();
@@ -300,13 +300,16 @@ public class MapsActivity1 extends FragmentActivity
                 InputStream ios = connect.getInputStream();
 
                 String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
-                ordersDto = gson.fromJson(body, OrderDto[].class);
+                ordersDto = gson.fromJson(body, Paths[].class);
                 ios.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println(ordersDto[0]);
-            return ordersDto[0].getRequestOrder();
+            if(ordersDto != null)
+                return ordersDto[0].getPlaces();
+            else
+                return null;
         }
     }
     @Override
@@ -329,7 +332,7 @@ public class MapsActivity1 extends FragmentActivity
         map.setOnMyLocationButtonClickListener(this);
 
         Geocoder g = new Geocoder(this, Locale.getDefault());
-       /* List<Address> a = new ArrayList<Address>();
+  /*      List<Address> a = new ArrayList<Address>();
 
         try {
          a = g.getFromLocationName("Warszawa",1);
@@ -363,34 +366,38 @@ public class MapsActivity1 extends FragmentActivity
         mapa = map;
         if(refresh) {
             refresh = false;
-            List<RequestOrderDto> requestOrderDtos = null;
+
+
+            List<Path> paths = null;
 
 
             try {
-                requestOrderDtos = new DownloadList().execute().get();
+                paths = new DownloadList().execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
 
-            Marker.convertToMarkers(requestOrderDtos);
-            System.out.println("after convert");
+            if(paths != null)
+                Marker.convertToMarkers(paths);
+                System.out.println("after convert");
+/*
             for (Marker m : Marker.getList()) {
                 System.out.println (m.getName());
                 List<Address> adresses = new ArrayList<Address>();
-                try {
+               try {
                     adresses = g.getFromLocationName(m.getAdress(), 1);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
 
-                    if(adresses != null) {
+                   {
                         m.setLatitude(adresses.get(0).getLatitude());
-                        m.setLognitude(adresses.get(0).getLongitude());
+                        m.setLognitude(adresses.get(0).getLongitude());                }
+
                         m.setVisited(false);
                     }
-            }
+            }*/
             System.out.println("end after convert");
             Marker.writeMarkers();
 
@@ -419,7 +426,7 @@ public class MapsActivity1 extends FragmentActivity
             }
 
         }
-        /*
+
         map.addMarker(new MarkerOptions()
                 .position(LOWER_MANHATTAN)
                 .title("manhatan"));
@@ -431,7 +438,7 @@ public class MapsActivity1 extends FragmentActivity
         map.addMarker(new MarkerOptions()
                 .position(WALL_STREET)
                 .title("wall_strett"));
-                */
+
 /*
 
         Log.e("data",String.valueOf(mypoints.size()));
@@ -484,7 +491,7 @@ public class MapsActivity1 extends FragmentActivity
        */
       @Override
       public void onLocationChanged(Location location) {
-          mMessageView.setText("Location = " + location);
+          //mMessageView.setText("Location = " + location);
       }
 
       /**
@@ -532,8 +539,10 @@ public class MapsActivity1 extends FragmentActivity
       }
     public void showList() {
         Intent openSecondActivity = new Intent(this,ListActivity.class);
-        openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
-        openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
+        if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
+            openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+            openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
+        }
         startActivity(openSecondActivity);
 
     }
