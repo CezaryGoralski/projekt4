@@ -31,6 +31,7 @@ public class PlaceModelViewAdapter extends RecyclerView.Adapter<PlaceModelHolder
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view = inflater.inflate(R.layout.place_item, null);
         return new PlaceModelHolder(view);
+
     }
 
     @Override
