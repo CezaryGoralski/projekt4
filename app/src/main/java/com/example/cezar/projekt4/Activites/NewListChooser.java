@@ -15,6 +15,7 @@ import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
 import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
+import com.example.cezar.projekt4.RecyclerView.SelectablePlaceModelViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
 
     private RecyclerView mylist;
     private ArrayList<Marker> mMarkers;
-    private PlaceModelViewAdapter placeModelViewAdapter;
+    private SelectablePlaceModelViewAdapter placeModelViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
 
         mMarkers = Marker.getList();
 
-        placeModelViewAdapter = new PlaceModelViewAdapter(mMarkers);
+        placeModelViewAdapter = new SelectablePlaceModelViewAdapter(mMarkers);
 
         mylist = (RecyclerView) findViewById(R.id.chooser);
         mylist.setLayoutManager(new LinearLayoutManager(this));

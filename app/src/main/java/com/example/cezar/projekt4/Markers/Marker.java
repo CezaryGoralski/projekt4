@@ -35,12 +35,13 @@ public class Marker implements Serializable {
     private String name;
     private String address;
     private int numberOfPlaces;
+    
     // private String info;
     private String category;
     private String url;
     private String img_url;
 
-
+    private boolean selected;
 
     private boolean visited;
 
