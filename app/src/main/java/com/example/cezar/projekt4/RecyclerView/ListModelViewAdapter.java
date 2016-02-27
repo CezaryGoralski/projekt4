@@ -10,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.R;
 
 import java.util.ArrayList;
 
 public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> {
 
-    private final ArrayList<Marker> itemsList;
+    private final ArrayList<Paths> itemsList;
 
-    public ListModelViewAdapter(ArrayList<Marker> itemsList) {
+    public ListModelViewAdapter(ArrayList<Paths> itemsList) {
         this.itemsList = itemsList;
     }
 
@@ -31,14 +32,14 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
 
     @Override
     public void onBindViewHolder(ListModelHolder holder, final int position) {
-        final Marker item = itemsList.get(position);
+        final Paths item = itemsList.get(position);
 
         holder.nameTextView.setText(item.getName());
-        holder.descriptionTextView.setText(item.getDescription());
+      //  holder.descriptionTextView.setText(item.getDescription());
 
         String flex;
 
-        switch (item.getNumberOfPlaces()) {
+        switch (item.getPlaces().size()) {
             case 1:
                 flex = "miejsce";
                 break;
@@ -52,7 +53,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
                 break;
         }
 
-        holder.numberTextView.setText(item.getNumberOfPlaces() + flex);
+        holder.numberTextView.setText(item.getPlaces().size() + flex);
         //
     }
 

@@ -577,6 +577,6 @@ public class MapsActivity1 extends AppCompatActivity
     }
 
     public void showLists(){
-
+        Intent openSecondActivity = new Intent(this,ListOfPathsActivity.class);
     }
   }
