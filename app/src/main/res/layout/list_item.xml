@@ -38,7 +38,7 @@
                     android:singleLine="true"
                     android:text="Tytuł listy"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
