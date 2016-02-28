@@ -72,6 +72,7 @@ public class MapsActivity1 extends AppCompatActivity
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
     private GoogleMap mapa;
     private boolean refresh = true;
+    private boolean download = false;
     private double latitude;
     private double lognitude;
     private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
@@ -169,7 +170,7 @@ public class MapsActivity1 extends AppCompatActivity
         Log.e("size", String.valueOf(markersList.size()));
         if (markersList.size() > 0) {
             // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
-            String origin = "origin=" + latitude + "," + lognitude;
+            String origin = "origin=" +  latitude + "," +  lognitude;
             String destination = "destination=" + markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
@@ -425,7 +426,8 @@ public class MapsActivity1 extends AppCompatActivity
         }
 
         if (Marker.getToDoList().size() > 1) {
-            String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
+            String url = getMapsApiDirectionsUrl(Marker.getList());
+           // String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
             ReadTask readTask = null;
             try {
                 ReadTask downloadTask = new ReadTask();

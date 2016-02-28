@@ -79,7 +79,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         if (mMarkers != null) {
             numberTextView.setText(String.valueOf(mMarkers.size()));
-            distanceTextView.setText(String.valueOf(4));
+            distanceTextView.setText(String.valueOf(calculateDistance(mMarkers)));
         }
 
     }
@@ -112,6 +112,8 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap map) {
         mapa = map;
+        map.setMyLocationEnabled(true);
+
         for (Marker m : mMarkers) {
             MarkerOptions marketOption = new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
@@ -166,7 +168,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
                         String snippet = marker.getSnippet();
                         String address = snippet.substring(0, snippet.indexOf("|"));
-                        String category = snippet.substring(snippet.indexOf("|")+1, snippet.length());
+                        String category = snippet.substring(snippet.indexOf("|") + 1, snippet.length());
 
                         final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
                         final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
