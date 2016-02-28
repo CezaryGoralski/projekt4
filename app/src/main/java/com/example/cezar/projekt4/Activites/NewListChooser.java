@@ -1,8 +1,11 @@
 package com.example.cezar.projekt4.Activites;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import com.octo.android.robospice.UncachedSpiceService;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,9 +145,21 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_next) {
             Intent intent = new Intent(this, NewMapChooser.class);
-            intent.putExtra("markers", getSelectedMarkers(mMarkers));
-
-            startActivity(intent);
+            ArrayList<Marker> newMarkers = getSelectedMarkers(mMarkers);
+            if(newMarkers.size() == 0){
+                new AlertDialog.Builder(this)
+                        .setTitle("Uwaga")
+                        .setMessage("Proszę wybrać co najmniej dwie lokalizacje.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(R.drawable.ic_warning)
+                        .show();
+            }else{
+                intent.putExtra("markers", getSelectedMarkers(mMarkers));
+                startActivity(intent);
+            }
         }
 
         return super.onOptionsItemSelected(item);
