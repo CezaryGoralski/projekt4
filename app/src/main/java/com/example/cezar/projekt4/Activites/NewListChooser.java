@@ -149,6 +149,11 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         return super.onOptionsItemSelected(item);
     }
 
+    private ArrayList<Marker> getSelectedMarkers(ArrayList<Marker> markers){
+        ArrayList<Marker> mMarkers = new ArrayList<>();
+        return mMarkers;
+    }
+
     private final class QueueRequestListener implements
             RequestListener<PlacesListModel> {
 

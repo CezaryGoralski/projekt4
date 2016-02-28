@@ -73,7 +73,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         headerImage = (ImageView) findViewById(R.id.circular_header);
 
         titleTextView.setText(marker.getName());
-        descriptionTextView.setText(marker.getDescription());
+        descriptionTextView.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         categoryTextView.setText(marker.getCategory());
         addressTextView.setText(marker.getAddress());
         timeTwoTextView.setText("09:00 - 16:00");
