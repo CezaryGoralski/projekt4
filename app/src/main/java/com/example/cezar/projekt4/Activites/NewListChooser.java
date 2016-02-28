@@ -146,7 +146,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         if (id == R.id.action_next) {
             Intent intent = new Intent(this, NewMapChooser.class);
             ArrayList<Marker> newMarkers = getSelectedMarkers(mMarkers);
-            if(newMarkers.size() == 0){
+            if(newMarkers.size() < 2){
                 new AlertDialog.Builder(this)
                         .setTitle("Uwaga")
                         .setMessage("Proszę wybrać co najmniej dwie lokalizacje.")
