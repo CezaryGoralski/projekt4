@@ -141,7 +141,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_new) {
+        if (id == R.id.action_next) {
             Intent intent = new Intent(this, NewMapChooser.class);
             intent.putExtra("markers", mMarkers);
 

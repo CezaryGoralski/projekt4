@@ -326,6 +326,9 @@ public class MapsActivity1 extends AppCompatActivity
         return true;
     }
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -335,7 +338,7 @@ public class MapsActivity1 extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new) {
-            startActivity(new Intent(this, NewMapChooser.class));
+            startActivity(new Intent(this, NewListChooser.class));
         }
 
         return super.onOptionsItemSelected(item);
