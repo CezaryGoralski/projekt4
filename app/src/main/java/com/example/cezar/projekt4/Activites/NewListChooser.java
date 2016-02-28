@@ -141,7 +141,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_next) {
             Intent intent = new Intent(this, NewMapChooser.class);
-            intent.putExtra("markers", mMarkers);
+            intent.putExtra("markers", getSelectedMarkers(mMarkers));
 
             startActivity(intent);
         }
@@ -150,8 +150,13 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
     }
 
     private ArrayList<Marker> getSelectedMarkers(ArrayList<Marker> markers){
-        ArrayList<Marker> mMarkers = new ArrayList<>();
-        return mMarkers;
+        ArrayList<Marker> newMarkers = new ArrayList<>();
+        for(Marker m : markers){
+            if(m != null && m.isSelected()){
+                newMarkers.add(m);
+            }
+        }
+        return newMarkers;
     }
 
     private final class QueueRequestListener implements
