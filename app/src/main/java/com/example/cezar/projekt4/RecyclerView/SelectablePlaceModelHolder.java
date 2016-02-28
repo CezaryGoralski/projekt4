@@ -16,6 +16,9 @@ import com.example.cezar.projekt4.Activites.PlaceActivity;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
 
+import java.util.List;
+import java.util.Map;
+
 public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
 
     public TextView nameTextView;
@@ -24,6 +27,9 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
     public ImageView iconView;
 
     public CheckBox checkBox;
+
+    private List<String> chosenMarkers;
+    private Marker marker;
 
     public SelectablePlaceModelHolder(View itemView) {
         super(itemView);
@@ -38,10 +44,40 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean is = false;
+                String newHash = null;
                 checkBox.setChecked(isChecked);
+
+                for(String hash : chosenMarkers){
+                    String tempHash = marker.getName()+marker.getAddress();
+                    if(hash.equalsIgnoreCase(tempHash)){
+                        is = true;
+                        newHash = tempHash;
+                        break;
+                    }
+                }
+
+                if(isChecked){
+                    if(!is){
+                        chosenMarkers.add(newHash);
+                    }
+                }else{
+                    if(is){
+                        chosenMarkers.remove(newHash);
+                    }
+                }
+
             }
         });
 
+    }
+
+    public void setMarker(Marker marker){
+        this.marker = marker;
+    }
+
+    public void setChosenMarkers(List<String> markers){
+        this.chosenMarkers = markers;
     }
 
 }

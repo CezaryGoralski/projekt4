@@ -4,7 +4,6 @@ package com.example.cezar.projekt4.RecyclerView;
  * Created by Marcin on 27.02.2016.
  */
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,11 @@ import java.util.List;
 public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<SelectablePlaceModelHolder> {
 
     private final ArrayList<Marker> itemsList;
+    private ArrayList<String> chosenMarkers = new ArrayList<>();
 
     public SelectablePlaceModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = new ArrayList<>(itemsList);
+        this.chosenMarkers = generateHashArray(itemsList);
     }
 
     @Override
@@ -37,6 +38,9 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
     @Override
     public void onBindViewHolder(SelectablePlaceModelHolder holder, final int position) {
         final Marker item = itemsList.get(position);
+
+        holder.setMarker(item);
+        holder.setChosenMarkers(chosenMarkers);
 
         holder.nameTextView.setText(item.getName());
         holder.addressTextView.setText(item.getAddress());
@@ -55,6 +59,14 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
         } else {
             return itemsList.size();
         }
+    }
+
+    private ArrayList<String> generateHashArray(List<Marker> markers){
+        final ArrayList<String> list = new ArrayList<>();
+        for(Marker m : markers){
+            list.add(m.getName()+m.getAddress());
+        }
+        return list;
     }
 
     public Marker removeItem(int position) {
