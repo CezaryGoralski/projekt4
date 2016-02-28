@@ -21,6 +21,7 @@ import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -123,7 +124,9 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             markersList.add(mapMarker);
         }
 
-        map.addMarker(new MarkerOptions()
+        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mMarkers.get(0).getLatitude(), mMarkers.get(0).getLongitude()), 13));
+
+        /*map.addMarker(new MarkerOptions()
                 .position(LOWER_MANHATTAN)
                 .title("manhatan"));
 
@@ -133,7 +136,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         map.addMarker(new MarkerOptions()
                 .position(WALL_STREET)
-                .title("wall_strett"));
+                .title("wall_strett"));*/
 
         System.out.println("Wczytywanie");
         if (mMarkers.size() > 1) {
