@@ -48,6 +48,10 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             distanceTextView;
     private GoogleMap mapa;
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
+    private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
+            -73.998585);
+    private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
+    private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +102,19 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
         }
+
+        map.addMarker(new MarkerOptions()
+                .position(LOWER_MANHATTAN)
+                .title("manhatan"));
+
+        map.addMarker(new MarkerOptions()
+                .position(BROOKLYN_BRIDGE)
+                .title("bridge"));
+
+        map.addMarker(new MarkerOptions()
+                .position(WALL_STREET)
+                .title("wall_strett"));
+
         System.out.println("Wczytywanie");
         if (mMarkers.size() > 1) {
             String url = getMapsApiDirectionsUrl(mMarkers);
@@ -138,23 +155,23 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
         return Math.round(distance/1000);
     }
 
-    private String getMapsApiDirectionsUrl(ArrayList<Marker> markersList) {
-
+    private String getMapsApiDirectionsUrl(ArrayList<Marker> MarkersList) {
+        ArrayList<Marker> myMarkersList = new ArrayList<Marker>(MarkersList);
         String url = null;
-        Log.e("size", String.valueOf(markersList.size()));
-        if (markersList.size() > 1) {
+        Log.e("size", String.valueOf(myMarkersList .size()));
+        if (myMarkersList .size() > 1) {
             // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
-            String origin = "origin=" + markersList.get(0).getLatitude() + "," + markersList.get(0).getLongitude();
-            String destination = "destination=" + markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
+            String origin = "origin=" + myMarkersList .get(0).getLatitude() + "," + myMarkersList .get(0).getLongitude();
+            String destination = "destination=" + myMarkersList.get(myMarkersList .size() - 1).getLatitude() + "," + myMarkersList .get(myMarkersList.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
             String params = origin + "&" + destination + "&" + sensor;
             // markersList.remove(0);
-            markersList.remove(0);
-            markersList.remove(markersList.size() - 1);
-            if (markersList.size() > 0) {
+            myMarkersList .remove(0);
+            myMarkersList .remove(myMarkersList.size() - 1);
+            if (myMarkersList .size() > 0) {
                 String waypoints = "waypoints=optimize:true";
-                for (Marker m : markersList) {
+                for (Marker m : myMarkersList ) {
                     waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLongitude();
                 }
                 params = origin + "&" + destination + "&" + waypoints + "&" + sensor;
