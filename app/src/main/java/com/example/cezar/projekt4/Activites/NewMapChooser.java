@@ -117,27 +117,25 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private int calculateDistance(ArrayList<Marker> markers) {
-        int distance = 0;
-        ListIterator<Marker> it = markers.listIterator();
+        float distance = 0;
+        int size = markers.size();
 
-        while (it.hasNext()) {
-            if (it.hasPrevious()) {
-                Marker previous = it.previous();
-                Marker next = it.next();
+        for(int i = 0; i < size-1; i++){
+            Marker previous = markers.get(i);
+            Marker next = markers.get(i + 1);
 
-                Location loc1 = new Location("");
-                loc1.setLatitude(previous.getLatitude());
-                loc1.setLongitude(previous.getLongitude());
+            Location loc1 = new Location("");
+            loc1.setLatitude(previous.getLatitude());
+            loc1.setLongitude(previous.getLongitude());
 
-                Location loc2 = new Location("");
-                loc2.setLatitude(next.getLatitude());
-                loc2.setLongitude(next.getLongitude());
+            Location loc2 = new Location("");
+            loc2.setLatitude(next.getLatitude());
+            loc2.setLongitude(next.getLongitude());
 
-                distance += (int) loc1.distanceTo(loc2);
-            }
+            distance += loc1.distanceTo(loc2);
         }
 
-        return distance;
+        return Math.round(distance/1000);
     }
 
     private String getMapsApiDirectionsUrl(ArrayList<Marker> markersList) {

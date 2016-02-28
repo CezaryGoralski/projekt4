@@ -90,6 +90,15 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
         applyAndAnimateRemovals(models);
         applyAndAnimateAdditions(models);
         applyAndAnimateMovedItems(models);
+
+        for(Marker m : models){
+            for(String hash : chosenMarkers){
+                if(hash.equalsIgnoreCase(m.getName() + m.getAddress()))
+                    m.setSelected(true);
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     private void applyAndAnimateRemovals(List<Marker> newModels) {
