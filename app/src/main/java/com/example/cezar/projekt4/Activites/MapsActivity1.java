@@ -491,11 +491,7 @@ public class MapsActivity1 extends AppCompatActivity
 
                         String snippet = marker.getSnippet();
                         String address = snippet.substring(0, snippet.indexOf("|"));
-                        String category = snippet.substring(snippet.indexOf("|"), snippet.length());
-
-                        Log.d("NewMapChooser", marker.getSnippet());
-                        Log.d("NewMapChooser", address);
-                        Log.d("NewMapChooser", category);
+                        String category = snippet.substring(snippet.indexOf("|")+1, snippet.length());
 
                         final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
                         final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
@@ -516,7 +512,9 @@ public class MapsActivity1 extends AppCompatActivity
                     public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
                         Intent intent = new Intent(MapsActivity1.this, PlaceActivity.class);
                         Marker mm = null;
+                        Log.d("NewMapChooser", "Marker title: " + marker.getTitle());
                         for (Marker m : Marker.getToDoList()) {
+                            Log.d("NewMapChooser", "mMarkers:: " + m.getName());
                             if (m.getName().equalsIgnoreCase(marker.getTitle())) {
                                 mm = m;
                                 break;

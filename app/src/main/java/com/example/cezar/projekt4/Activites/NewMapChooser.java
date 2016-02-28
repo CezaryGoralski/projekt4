@@ -166,11 +166,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
                         String snippet = marker.getSnippet();
                         String address = snippet.substring(0, snippet.indexOf("|"));
-                        String category = snippet.substring(snippet.indexOf("|"), snippet.length());
-
-                        Log.d("NewMapChooser", marker.getSnippet());
-                        Log.d("NewMapChooser", address);
-                        Log.d("NewMapChooser", category);
+                        String category = snippet.substring(snippet.indexOf("|")+1, snippet.length());
 
                         final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
                         final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
@@ -191,7 +187,9 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
                     public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
                         Intent intent = new Intent(NewMapChooser.this, PlaceActivity.class);
                         Marker mm = null;
+                        Log.d("NewMapChooser", "Marker title: " + marker.getTitle());
                         for (Marker m : mMarkers) {
+                            Log.d("NewMapChooser", "mMarkers:: " + m.getName());
                             if (m.getName().equalsIgnoreCase(marker.getTitle())) {
                                 mm = m;
                                 break;
