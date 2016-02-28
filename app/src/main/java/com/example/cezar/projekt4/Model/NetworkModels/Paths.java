@@ -16,5 +16,6 @@ public class Paths  implements Serializable{
     private Long id;
     private List<Marker> places;
     private String name;
+    private double distance;
 
 }
