@@ -31,6 +31,7 @@ public class ListOfPathsActivity extends AppCompatActivity {
     private SpiceManager spiceManager = new SpiceManager(
             UncachedSpiceService.class);
     private ListModelViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,10 +92,11 @@ public class ListOfPathsActivity extends AppCompatActivity {
         spiceManager.shouldStop();
         super.onStop();
     }
+
     private void performRequest() {
 
 
-       ListOfPathsActivity.this.setProgressBarIndeterminateVisibility(true);
+        ListOfPathsActivity.this.setProgressBarIndeterminateVisibility(true);
 
         ListOfListSpiceRequest request = new ListOfListSpiceRequest();
         spiceManager.execute(request, new QueueRequestListener());
@@ -114,10 +116,9 @@ public class ListOfPathsActivity extends AppCompatActivity {
         public void onRequestSuccess(DataFromNetwork kolejkiDto) {
             ListOfPathsActivity.this.setProgressBarIndeterminateVisibility(false);
             ArrayList<Paths> kolejkaDto = new ArrayList<Paths>();
-            if(kolejkiDto != null) {
+            if (kolejkiDto != null) {
                 kolejkaDto = new ArrayList<Paths>(kolejkiDto.getTrips());
-            }
-            else {
+            } else {
                 kolejkaDto = new ArrayList<Paths>();
                 Toast.makeText(ListOfPathsActivity.this,
                         "Error: " + "brak danych", Toast.LENGTH_SHORT)
@@ -129,14 +130,13 @@ public class ListOfPathsActivity extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);*/
 
-            ListModelViewAdapter adapter= new ListModelViewAdapter(kolejkaDto);
+            ListModelViewAdapter adapter = new ListModelViewAdapter(kolejkaDto);
             //  officeDataAdapter.setClickListener(this);
             mylist.setAdapter(adapter);
         }
 
 
     }
-
 
 
 }

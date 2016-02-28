@@ -4,17 +4,14 @@ package com.example.cezar.projekt4.RecyclerView;
  * Created by Marcin on 27.02.2016.
  */
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cezar.projekt4.ImageTransform.CircularTransform;
 import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.PlaceModel;
 import com.example.cezar.projekt4.R;
 import com.koushikdutta.ion.Ion;
 

@@ -1,6 +1,5 @@
 package com.example.cezar.projekt4.Network;
 
-import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
 import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
@@ -19,6 +18,7 @@ import java.nio.charset.Charset;
  */
 public class ListOfPlacesSpiceRequest extends SpiceRequest<PlacesListModel> {
     private String param;
+
     public ListOfPlacesSpiceRequest() {
         super(PlacesListModel.class);
     }
@@ -49,8 +49,6 @@ public class ListOfPlacesSpiceRequest extends SpiceRequest<PlacesListModel> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
 
         //   System.out.println(ordersDto[0]);

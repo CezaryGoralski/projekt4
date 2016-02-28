@@ -12,7 +12,7 @@ import java.util.List;
 @lombok.Getter
 @lombok.Setter
 @lombok.ToString
-public class Paths  implements Serializable{
+public class Paths implements Serializable {
     private Long id;
     private List<Marker> places;
     private String name;

@@ -23,7 +23,6 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
     }
 
 
-
     @Override
     public ListModelHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -36,7 +35,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
         final Paths item = itemsList.get(position);
 
         holder.nameTextView.setText(item.getName());
-      //  holder.descriptionTextView.setText(item.getDescription());
+        //  holder.descriptionTextView.setText(item.getDescription());
 
         String flex;
 

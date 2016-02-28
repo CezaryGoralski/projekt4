@@ -44,7 +44,7 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
 
         holder.nameTextView.setText(item.getName());
         holder.addressTextView.setText(item.getAddress());
-        
+
         holder.checkBox.setChecked(item.isSelected());
 
         Ion.with(holder.iconView)
@@ -61,10 +61,10 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
         }
     }
 
-    private ArrayList<String> generateHashArray(List<Marker> markers){
+    private ArrayList<String> generateHashArray(List<Marker> markers) {
         final ArrayList<String> list = new ArrayList<>();
-        for(Marker m : markers){
-            list.add(m.getName()+m.getAddress());
+        for (Marker m : markers) {
+            list.add(m.getName() + m.getAddress());
         }
         return list;
     }

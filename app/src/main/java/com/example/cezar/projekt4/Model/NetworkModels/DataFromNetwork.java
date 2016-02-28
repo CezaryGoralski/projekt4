@@ -10,5 +10,5 @@ import java.util.ArrayList;
 @lombok.Setter
 @lombok.ToString
 public class DataFromNetwork {
-    ArrayList<Paths> trips  = new ArrayList<Paths>();
+    ArrayList<Paths> trips = new ArrayList<Paths>();
 }

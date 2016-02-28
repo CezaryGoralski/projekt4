@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
  */
 public class ListOfListSpiceRequest extends SpiceRequest<DataFromNetwork> {
     private String param;
+
     public ListOfListSpiceRequest() {
         super(DataFromNetwork.class);
     }
@@ -48,8 +49,6 @@ public class ListOfListSpiceRequest extends SpiceRequest<DataFromNetwork> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
 
         //   System.out.println(ordersDto[0]);

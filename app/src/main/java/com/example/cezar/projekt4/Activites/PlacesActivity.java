@@ -11,16 +11,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
-import com.example.cezar.projekt4.Model.NetworkModels.Paths;
 import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
-import com.example.cezar.projekt4.Network.ListOfListSpiceRequest;
 import com.example.cezar.projekt4.Network.ListOfPlacesSpiceRequest;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
-import com.example.cezar.projekt4.RecyclerView.ListModelViewAdapter;
 import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
-import com.google.android.gms.location.places.Places;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.UncachedSpiceService;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -36,6 +31,7 @@ public class PlacesActivity extends AppCompatActivity {
     private SpiceManager spiceManager = new SpiceManager(
             UncachedSpiceService.class);
     private PlaceModelViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +95,7 @@ public class PlacesActivity extends AppCompatActivity {
         spiceManager.shouldStop();
         super.onStop();
     }
+
     private void performRequest() {
 
 
@@ -122,10 +119,9 @@ public class PlacesActivity extends AppCompatActivity {
         public void onRequestSuccess(PlacesListModel kolejkiDto) {
             PlacesActivity.this.setProgressBarIndeterminateVisibility(false);
             ArrayList<Marker> kolejkaDto;
-            if(kolejkiDto != null) {
+            if (kolejkiDto != null) {
                 kolejkaDto = new ArrayList<Marker>(kolejkiDto.getPlaces());
-            }
-            else {
+            } else {
                 kolejkaDto = new ArrayList<Marker>();
                 Toast.makeText(PlacesActivity.this,
                         "Error: " + "brak danych", Toast.LENGTH_SHORT)
@@ -137,14 +133,13 @@ public class PlacesActivity extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);*/
 
-           adapter= new PlaceModelViewAdapter(kolejkaDto);
+            adapter = new PlaceModelViewAdapter(kolejkaDto);
             //  officeDataAdapter.setClickListener(this);
             mylist.setAdapter(adapter);
         }
 
 
     }
-
 
 
 }

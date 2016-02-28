@@ -45,21 +45,21 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
                 String newHash = null;
                 checkBox.setChecked(isChecked);
 
-                for(String hash : chosenMarkers){
-                    String tempHash = marker.getName()+marker.getAddress();
-                    if(hash.equalsIgnoreCase(tempHash)){
+                for (String hash : chosenMarkers) {
+                    String tempHash = marker.getName() + marker.getAddress();
+                    if (hash.equalsIgnoreCase(tempHash)) {
                         is = true;
                         newHash = tempHash;
                         break;
                     }
                 }
 
-                if(isChecked){
-                    if(!is){
+                if (isChecked) {
+                    if (!is) {
                         chosenMarkers.add(newHash);
                     }
-                }else{
-                    if(is){
+                } else {
+                    if (is) {
                         chosenMarkers.remove(newHash);
                     }
                 }
@@ -69,11 +69,11 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setMarker(Marker marker){
+    public void setMarker(Marker marker) {
         this.marker = marker;
     }
 
-    public void setChosenMarkers(List<String> markers){
+    public void setChosenMarkers(List<String> markers) {
         this.chosenMarkers = markers;
     }
 

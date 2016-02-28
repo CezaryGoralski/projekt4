@@ -18,9 +18,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 /**
@@ -32,7 +32,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
     private ArrayList<Marker> mMarkers;
 
     private TextView numberTextView,
-    distanceTextView;
+            distanceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +53,14 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         mMarkers = (ArrayList<Marker>) getIntent().getExtras().getSerializable("markers");
 
-        myMap = (MapView) findViewById(R.id.map);
-        myMap.getMapAsync(this);
-        myMap.onCreate(savedInstanceState);
-
-        MapsInitializer.initialize(this);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         numberTextView = (TextView) findViewById(R.id.number_text);
         distanceTextView = (TextView) findViewById(R.id.distance_text);
 
-        if(mMarkers != null){
+        if (mMarkers != null) {
             numberTextView.setText(String.valueOf(mMarkers.size()));
             distanceTextView.setText(String.valueOf(4));
         }
@@ -81,13 +79,12 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private int calculateDistance(ArrayList<Marker> markers){
+    private int calculateDistance(ArrayList<Marker> markers) {
         int distance = 0;
         ListIterator<Marker> it = markers.listIterator();
 
-        while(it.hasNext())
-        {
-            if(it.hasPrevious()){
+        while (it.hasNext()) {
+            if (it.hasPrevious()) {
                 Marker previous = it.previous();
                 Marker next = it.next();
 

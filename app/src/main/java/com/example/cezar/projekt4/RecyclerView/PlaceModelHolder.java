@@ -38,7 +38,7 @@ public class PlaceModelHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setMarker(Marker marker, final Context activity){
+    public void setMarker(Marker marker, final Context activity) {
         final Intent newActivity = new Intent(activity, PlaceActivity.class);
         newActivity.putExtra("Marker", marker);
 

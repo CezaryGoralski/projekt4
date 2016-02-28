@@ -6,11 +6,11 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.cezar.projekt4.Markers.Marker;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by Marcin on 27.02.2016.
  */
-public class NewListChooser extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class NewListChooser extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private RecyclerView mylist;
     private ArrayList<Marker> mMarkers;
@@ -96,7 +96,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         query = query.toLowerCase();
 
         final List<Marker> filteredModelList = new ArrayList<>();
-        if(models != null){
+        if (models != null) {
             for (Marker model : models) {
                 final String name = model.getName().toLowerCase();
                 final String address = model.getAddress().toLowerCase();
@@ -110,7 +110,6 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
 
         return filteredModelList;
     }
-
 
 
     @Override
@@ -164,10 +163,9 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         public void onRequestSuccess(PlacesListModel kolejkiDto) {
             NewListChooser.this.setProgressBarIndeterminateVisibility(false);
             ArrayList<Marker> kolejkaDto;
-            if(kolejkiDto != null) {
+            if (kolejkiDto != null) {
                 kolejkaDto = new ArrayList<Marker>(kolejkiDto.getPlaces());
-            }
-            else {
+            } else {
                 kolejkaDto = new ArrayList<Marker>();
                 Toast.makeText(NewListChooser.this,
                         "Error: " + "brak danych", Toast.LENGTH_SHORT)

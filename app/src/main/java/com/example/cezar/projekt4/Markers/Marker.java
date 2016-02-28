@@ -3,9 +3,9 @@ package com.example.cezar.projekt4.Markers;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;
 import com.example.cezar.projekt4.Model.algorithm.Edge;
 import com.example.cezar.projekt4.Model.algorithm.EdgeComparator;
-import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;
 import com.example.cezar.projekt4.Model.algorithm.Node;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class Marker implements Serializable {
     private String name;
     private String address;
     private int numberOfPlaces;
-    
+
     // private String info;
     private String category;
     private String url;
@@ -73,7 +73,6 @@ public class Marker implements Serializable {
         this.name = name;
         list.add(this);
     }
-
 
 
     public Marker(String name) {
@@ -233,7 +232,6 @@ public class Marker implements Serializable {
         } else
             return markers;
     }
-
 
 
     public static void convertToMarkers(List<Marker> lista) {

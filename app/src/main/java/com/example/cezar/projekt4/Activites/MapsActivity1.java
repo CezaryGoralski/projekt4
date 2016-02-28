@@ -1,5 +1,21 @@
 package com.example.cezar.projekt4.Activites;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
@@ -21,22 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.location.Geocoder;
-import android.location.Location;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -147,13 +147,13 @@ public class MapsActivity1 extends AppCompatActivity
 
     private String getMapsApiDirectionsUrl() {
 
-        String origin ="origin=" + LOWER_MANHATTAN.latitude + "," + LOWER_MANHATTAN.longitude;
-        String destination = "destination="  + WALL_STREET.latitude + "," + WALL_STREET.longitude;
+        String origin = "origin=" + LOWER_MANHATTAN.latitude + "," + LOWER_MANHATTAN.longitude;
+        String destination = "destination=" + WALL_STREET.latitude + "," + WALL_STREET.longitude;
         String waypoints = "waypoints=optimize:true|" + BROOKLYN_BRIDGE.latitude + ","
                 + BROOKLYN_BRIDGE.longitude;
 
         String sensor = "sensor=false";
-        String params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+        String params = origin + "&" + destination + "&" + waypoints + "&" + sensor;
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/"
                 + output + "?" + params;
@@ -165,21 +165,21 @@ public class MapsActivity1 extends AppCompatActivity
 
         String url = null;
         Log.e("size", String.valueOf(markersList.size()));
-        if(markersList.size() > 0) {
+        if (markersList.size() > 0) {
             // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String origin = "origin=" + latitude + "," + lognitude;
-            String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
+            String destination = "destination=" + markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
-            String params = origin + "&"+ destination +"&" + sensor;
+            String params = origin + "&" + destination + "&" + sensor;
             // markersList.remove(0);
             markersList.remove(markersList.size() - 1);
-            if(markersList.size() > 0 ){
+            if (markersList.size() > 0) {
                 String waypoints = "waypoints=optimize:true";
-                for(Marker m: markersList){
+                for (Marker m : markersList) {
                     waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLongitude();
                 }
-                params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
+                params = origin + "&" + destination + "&" + waypoints + "&" + sensor;
             }
             url = "https://maps.googleapis.com/maps/api/directions/"
                     + output + "?" + params;
@@ -198,7 +198,7 @@ public class MapsActivity1 extends AppCompatActivity
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
-            Log.e("data","data readed");
+            Log.e("data", "data readed");
             return data;
         }
 
@@ -266,8 +266,6 @@ public class MapsActivity1 extends AppCompatActivity
         //    startActivity(loginIntent);
 
 
-
-
     }
 
 
@@ -301,12 +299,13 @@ public class MapsActivity1 extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            if(ordersDto != null)
+            if (ordersDto != null)
                 return ordersDto.getTrips().get(0).getPlaces();
             else
                 return null;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -325,8 +324,6 @@ public class MapsActivity1 extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
-
 
 
     @Override
@@ -379,7 +376,7 @@ public class MapsActivity1 extends AppCompatActivity
         Marker.readMarkers();
         //rysowanie
         mapa = map;
-        if(refresh) {
+        if (refresh) {
             refresh = false;
 
 
@@ -394,7 +391,7 @@ public class MapsActivity1 extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            if(paths != null)
+            if (paths != null)
                 Marker.convertToMarkers(paths);
             System.out.println("after convert");
 /*
@@ -417,15 +414,14 @@ public class MapsActivity1 extends AppCompatActivity
         }
 
 
-
-        for(Marker m: Marker.getToDoList()){
+        for (Marker m : Marker.getToDoList()) {
             MarkerOptions marketOption = new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
                     .title(m.getName());
-            com.google.android.gms.maps.model.Marker mapMarker =   map.addMarker(marketOption);
+            com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
         }
-        if(Marker.getToDoList().size() > 1) {
+        if (Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
             ReadTask readTask = null;
             try {
@@ -544,7 +540,7 @@ public class MapsActivity1 extends AppCompatActivity
 
     public void showPlaces() {
         Intent openSecondActivity = new Intent(this, PlacesActivity.class);
-        if(LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
+        if (LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient) != null) {
             openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
             openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
         }
@@ -552,8 +548,8 @@ public class MapsActivity1 extends AppCompatActivity
 
     }
 
-    public void showLists(){
-        Intent openSecondActivity = new Intent(this,ListOfPathsActivity.class);
+    public void showLists() {
+        Intent openSecondActivity = new Intent(this, ListOfPathsActivity.class);
         startActivity(openSecondActivity);
     }
 }
