@@ -41,21 +41,12 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                boolean is = false;
                 String tempHash = marker.getName()+marker.getAddress();
                 checkBox.setChecked(isChecked);
 
-                for (String hash : chosenMarkers) {
-                    if (hash.equalsIgnoreCase(tempHash)) {
-                        is = true;
-                        break;
-                    }
-                }
-
                 if (isChecked) {
-                    if (!is) {
+                    if(!chosenMarkers.contains(tempHash))
                         chosenMarkers.add(tempHash);
-                    }
                 } else {
                     if(chosenMarkers.contains(tempHash))
                         chosenMarkers.remove(tempHash);
