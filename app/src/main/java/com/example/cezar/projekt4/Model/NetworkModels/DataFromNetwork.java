@@ -1,6 +1,5 @@
-package com.example.cezar.projekt4.Model;
+package com.example.cezar.projekt4.Model.NetworkModels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

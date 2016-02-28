@@ -9,8 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.Paths;
+import com.example.cezar.projekt4.Model.NetworkModels.Paths;
 import com.example.cezar.projekt4.R;
 
 import java.util.ArrayList;

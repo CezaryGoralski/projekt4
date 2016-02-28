@@ -1,6 +1,7 @@
 package com.example.cezar.projekt4.Network;
 
 import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
+import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.octo.android.robospice.request.SpiceRequest;
@@ -16,24 +17,24 @@ import java.nio.charset.Charset;
 /**
  * Created by Cezar on 2016-02-27.
  */
-public class ListOfListSpiceRequest extends SpiceRequest<DataFromNetwork> {
+public class ListOfPlacesSpiceRequest extends SpiceRequest<PlacesListModel> {
     private String param;
-    public ListOfListSpiceRequest() {
-        super(DataFromNetwork.class);
+    public ListOfPlacesSpiceRequest() {
+        super(PlacesListModel.class);
     }
 
     @Override
-    public DataFromNetwork loadDataFromNetwork() throws Exception {
+    public PlacesListModel loadDataFromNetwork() throws Exception {
         URL url = null;
         try {
-            url = new URL("http://52.34.41.87/trips");
+            url = new URL("http://52.34.41.87/places");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
         Gson gson = new Gson();
 
-        DataFromNetwork ordersDto = null;
+        PlacesListModel ordersDto = null;
 
         try {
             HttpURLConnection connect = (HttpURLConnection) url.openConnection();
@@ -43,7 +44,7 @@ public class ListOfListSpiceRequest extends SpiceRequest<DataFromNetwork> {
             InputStream ios = connect.getInputStream();
 
             String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
-            ordersDto = gson.fromJson(body, DataFromNetwork.class);
+            ordersDto = gson.fromJson(body, PlacesListModel.class);
             ios.close();
         } catch (IOException e) {
             e.printStackTrace();

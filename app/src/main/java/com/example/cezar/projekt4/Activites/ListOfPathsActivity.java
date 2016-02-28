@@ -10,15 +10,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.DataFromNetwork;
-import com.example.cezar.projekt4.Model.Path;
-import com.example.cezar.projekt4.Model.Paths;
+import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
+import com.example.cezar.projekt4.Model.NetworkModels.Paths;
 import com.example.cezar.projekt4.Network.ListOfListSpiceRequest;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
 import com.example.cezar.projekt4.RecyclerView.ListModelViewAdapter;
-import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.UncachedSpiceService;
 import com.octo.android.robospice.persistence.exception.SpiceException;

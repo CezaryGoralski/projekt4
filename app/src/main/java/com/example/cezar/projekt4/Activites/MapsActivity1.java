@@ -1,16 +1,10 @@
 package com.example.cezar.projekt4.Activites;
 
-import com.example.cezar.projekt4.Activites.ListOfPathsActivity;
-import com.example.cezar.projekt4.Activites.MarkAsVisitedMarker;
-import com.example.cezar.projekt4.Activites.NewListChooser;
-import com.example.cezar.projekt4.Activites.PlacesActivity;
 import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.DataFromNetwork;
+import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
 import com.example.cezar.projekt4.PathJSONParser;
-import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.R;
-import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;

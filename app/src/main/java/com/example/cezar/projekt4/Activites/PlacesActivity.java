@@ -8,18 +8,34 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
+import com.example.cezar.projekt4.Model.NetworkModels.Paths;
+import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
+import com.example.cezar.projekt4.Network.ListOfListSpiceRequest;
+import com.example.cezar.projekt4.Network.ListOfPlacesSpiceRequest;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
+import com.example.cezar.projekt4.RecyclerView.ListModelViewAdapter;
 import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
+import com.google.android.gms.location.places.Places;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.UncachedSpiceService;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+
+import java.util.ArrayList;
 
 
 public class PlacesActivity extends AppCompatActivity {
     private double latitude;
     private double lognitude;
     private RecyclerView mylist;
-
+    private SpiceManager spiceManager = new SpiceManager(
+            UncachedSpiceService.class);
+    private PlaceModelViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +57,7 @@ public class PlacesActivity extends AppCompatActivity {
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
 
         Marker.readMarkers();
-        PlaceModelViewAdapter adapter = new PlaceModelViewAdapter(Marker.getList());
+        adapter = new PlaceModelViewAdapter(Marker.getList());
 
         mylist = (RecyclerView) findViewById(R.id.lists);
         mylist.setLayoutManager(new LinearLayoutManager(this));
@@ -71,39 +87,64 @@ public class PlacesActivity extends AppCompatActivity {
         startActivity(openSecondActivity);
     }
 
-/*
-    private class DownloadList extends AsyncTask<Void, Void, List<Path>> {
+
+    @Override
+    protected void onStart() {
+        spiceManager.start(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+    private void performRequest() {
+
+
+        PlacesActivity.this.setProgressBarIndeterminateVisibility(true);
+
+        ListOfPlacesSpiceRequest request = new ListOfPlacesSpiceRequest();
+        spiceManager.execute(request, new QueueRequestListener());
+
+    }
+
+    private final class QueueRequestListener implements
+            RequestListener<PlacesListModel> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(PlacesActivity.this,
+                    "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         @Override
-        protected List<Path> doInBackground(Void... params) {
-
-            URL url = null;
-            try {
-                url = new URL("http://b3982186.ngrok.io/orders");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+        public void onRequestSuccess(PlacesListModel kolejkiDto) {
+            PlacesActivity.this.setProgressBarIndeterminateVisibility(false);
+            ArrayList<Marker> kolejkaDto;
+            if(kolejkiDto != null) {
+                kolejkaDto = new ArrayList<Marker>(kolejkiDto.getPlaces());
             }
-
-            Gson gson = new Gson();
-
-            Paths[] ordersDto = new Paths[0];
-;
-            try {
-                HttpURLConnection connect = (HttpURLConnection) url.openConnection();
-                connect.setRequestMethod("GET");
-                connect.setRequestProperty("Content-Type", "application/json");
-                connect.setRequestProperty("Accept", "application/json");
-                InputStream ios = connect.getInputStream();
-
-                String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
-                ordersDto = gson.fromJson(body, Paths[].class);
-                ios.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            else {
+                kolejkaDto = new ArrayList<Marker>();
+                Toast.makeText(PlacesActivity.this,
+                        "Error: " + "brak danych", Toast.LENGTH_SHORT)
+                        .show();
             }
-            System.out.println(ordersDto[0]);
-            return ordersDto[0].getRequestOrder();
+        /*    recList = (RecyclerView) findViewById(R.id.recycledList2);
+            recList.setHasFixedSize(true);
+            LinearLayoutManager llm = new LinearLayoutManager(QueueToOfficeListActivity.this);
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            recList.setLayoutManager(llm);*/
+
+           adapter= new PlaceModelViewAdapter(kolejkaDto);
+            //  officeDataAdapter.setClickListener(this);
+            mylist.setAdapter(adapter);
         }
-    }*/
+
+
+    }
+
+
 
 }

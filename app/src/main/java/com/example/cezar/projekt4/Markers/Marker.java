@@ -3,7 +3,6 @@ package com.example.cezar.projekt4.Markers;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.cezar.projekt4.Model.Path;
 import com.example.cezar.projekt4.Model.algorithm.Edge;
 import com.example.cezar.projekt4.Model.algorithm.EdgeComparator;
 import com.example.cezar.projekt4.Model.MarkerIsVisitedComparator;

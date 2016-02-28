@@ -1,10 +1,8 @@
-package com.example.cezar.projekt4.Model;
+package com.example.cezar.projekt4.Model.NetworkModels;
 
 import com.example.cezar.projekt4.Markers.Marker;
-import com.example.cezar.projekt4.Model.Path;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

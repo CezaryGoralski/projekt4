@@ -10,11 +10,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
+import com.example.cezar.projekt4.Network.ListOfPlacesSpiceRequest;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
+import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.example.cezar.projekt4.RecyclerView.SelectablePlaceModelViewAdapter;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.UncachedSpiceService;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +35,8 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
     private RecyclerView mylist;
     private ArrayList<Marker> mMarkers;
     private SelectablePlaceModelViewAdapter placeModelViewAdapter;
-
+    private SpiceManager spiceManager = new SpiceManager(
+            UncachedSpiceService.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +53,10 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                 onBackPressed();
             }
         });
-
-        Marker.readMarkers();
-        mMarkers = Marker.getList();
-
+/*
+        Marker.readMarkers();*/
+        mMarkers = new ArrayList<Marker>();
+        performRequest();
         placeModelViewAdapter = new SelectablePlaceModelViewAdapter(mMarkers);
 
         mylist = (RecyclerView) findViewById(R.id.chooser);
@@ -101,4 +110,64 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
 
         return filteredModelList;
     }
+
+
+
+    @Override
+    protected void onStart() {
+        spiceManager.start(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+    private void performRequest() {
+
+
+        NewListChooser.this.setProgressBarIndeterminateVisibility(true);
+
+        ListOfPlacesSpiceRequest request = new ListOfPlacesSpiceRequest();
+        spiceManager.execute(request, new QueueRequestListener());
+
+    }
+
+    private final class QueueRequestListener implements
+            RequestListener<PlacesListModel> {
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(NewListChooser.this,
+                    "Error: " + spiceException.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        @Override
+        public void onRequestSuccess(PlacesListModel kolejkiDto) {
+            NewListChooser.this.setProgressBarIndeterminateVisibility(false);
+            ArrayList<Marker> kolejkaDto;
+            if(kolejkiDto != null) {
+                kolejkaDto = new ArrayList<Marker>(kolejkiDto.getPlaces());
+            }
+            else {
+                kolejkaDto = new ArrayList<Marker>();
+                Toast.makeText(NewListChooser.this,
+                        "Error: " + "brak danych", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        /*    recList = (RecyclerView) findViewById(R.id.recycledList2);
+            recList.setHasFixedSize(true);
+            LinearLayoutManager llm = new LinearLayoutManager(QueueToOfficeListActivity.this);
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            recList.setLayoutManager(llm);*/
+            System.out.println(kolejkaDto);
+            placeModelViewAdapter = new SelectablePlaceModelViewAdapter(kolejkaDto);
+            //  officeDataAdapter.setClickListener(this);
+            mylist.setAdapter(placeModelViewAdapter);
+        }
+
+
+    }
+
 }

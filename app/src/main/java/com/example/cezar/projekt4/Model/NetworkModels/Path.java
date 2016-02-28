@@ -1,4 +1,4 @@
-package com.example.cezar.projekt4.Model;
+package com.example.cezar.projekt4.Model.NetworkModels;
 
 /**
  * Created by Kuba on 13.12.2015.
