@@ -1,5 +1,6 @@
 package com.example.cezar.projekt4.Activites;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
     private SelectablePlaceModelViewAdapter placeModelViewAdapter;
     private SpiceManager spiceManager = new SpiceManager(
             UncachedSpiceService.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +55,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                 onBackPressed();
             }
         });
-/*
-        Marker.readMarkers();*/
+
         mMarkers = new ArrayList<Marker>();
         performRequest();
         placeModelViewAdapter = new SelectablePlaceModelViewAdapter(mMarkers);
@@ -124,18 +125,35 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
         spiceManager.shouldStop();
         super.onStop();
     }
+
     private void performRequest() {
-
-
         NewListChooser.this.setProgressBarIndeterminateVisibility(true);
 
         ListOfPlacesSpiceRequest request = new ListOfPlacesSpiceRequest();
         spiceManager.execute(request, new QueueRequestListener());
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_new) {
+            Intent intent = new Intent(this, NewMapChooser.class);
+            intent.putExtra("markers", mMarkers);
+
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private final class QueueRequestListener implements
             RequestListener<PlacesListModel> {
+
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             Toast.makeText(NewListChooser.this,
@@ -156,14 +174,8 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                         "Error: " + "brak danych", Toast.LENGTH_SHORT)
                         .show();
             }
-        /*    recList = (RecyclerView) findViewById(R.id.recycledList2);
-            recList.setHasFixedSize(true);
-            LinearLayoutManager llm = new LinearLayoutManager(QueueToOfficeListActivity.this);
-            llm.setOrientation(LinearLayoutManager.VERTICAL);
-            recList.setLayoutManager(llm);*/
             System.out.println(kolejkaDto);
             placeModelViewAdapter = new SelectablePlaceModelViewAdapter(kolejkaDto);
-            //  officeDataAdapter.setClickListener(this);
             mylist.setAdapter(placeModelViewAdapter);
         }
 

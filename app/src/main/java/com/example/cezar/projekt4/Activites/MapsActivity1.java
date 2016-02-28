@@ -335,7 +335,7 @@ public class MapsActivity1 extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new) {
-            startActivity(new Intent(this, NewListChooser.class));
+            startActivity(new Intent(this, NewMapChooser.class));
         }
 
         return super.onOptionsItemSelected(item);
