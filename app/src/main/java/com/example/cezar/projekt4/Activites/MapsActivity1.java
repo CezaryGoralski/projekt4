@@ -418,7 +418,7 @@ public class MapsActivity1 extends AppCompatActivity
 
         for (Marker m : Marker.getToDoList()) {
             MarkerOptions marketOption = new MarkerOptions()
-                    .position(new LatLng(m.getLatitude(), m.getLongitude()))
+                    .position(new LatLng(m.getLatitude(), m.getLongitude())).snippet(m.getAddress()+"|"+m.getCategory())
                     .title(m.getName());
             com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);

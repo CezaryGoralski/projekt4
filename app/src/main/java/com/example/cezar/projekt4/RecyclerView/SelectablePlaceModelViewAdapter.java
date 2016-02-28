@@ -20,7 +20,7 @@ import java.util.List;
 public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<SelectablePlaceModelHolder> {
 
     private final ArrayList<Marker> itemsList;
-    private ArrayList<String> chosenMarkers = new ArrayList<>();
+    private ArrayList<String> chosenMarkers;
 
     public SelectablePlaceModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = new ArrayList<>(itemsList);
