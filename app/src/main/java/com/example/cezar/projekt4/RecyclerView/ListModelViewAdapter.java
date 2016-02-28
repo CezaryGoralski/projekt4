@@ -23,6 +23,8 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
         this.itemsList = itemsList;
     }
 
+
+
     @Override
     public ListModelHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());

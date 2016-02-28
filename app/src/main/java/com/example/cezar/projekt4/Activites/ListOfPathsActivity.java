@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.DataFromNetwork;
+import com.example.cezar.projekt4.Model.Path;
 import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.Network.ListOfListSpiceRequest;
 import com.example.cezar.projekt4.R;
@@ -31,11 +33,11 @@ public class ListOfPathsActivity extends AppCompatActivity {
     private RecyclerView mylist;
     private SpiceManager spiceManager = new SpiceManager(
             UncachedSpiceService.class);
-
+    private ListModelViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_places);
+        setContentView(R.layout.layout_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -49,10 +51,9 @@ public class ListOfPathsActivity extends AppCompatActivity {
             }
         });
 
-        latitude = getIntent().getDoubleExtra("Latitude", 0);
-        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
-        Marker.readMarkers();
-        ListModelViewAdapter adapter = new ListModelViewAdapter(new ArrayList<Paths>());
+
+        performRequest();
+        adapter = new ListModelViewAdapter(new ArrayList<Paths>());
 
         mylist = (RecyclerView) findViewById(R.id.lists);
         mylist.setLayoutManager(new LinearLayoutManager(this));
@@ -82,7 +83,18 @@ public class ListOfPathsActivity extends AppCompatActivity {
         startActivity(openSecondActivity);
     }
 
-      private void performRequest(String searchQuery) {
+    @Override
+    protected void onStart() {
+        spiceManager.start(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+    private void performRequest() {
 
 
        ListOfPathsActivity.this.setProgressBarIndeterminateVisibility(true);
@@ -93,7 +105,7 @@ public class ListOfPathsActivity extends AppCompatActivity {
     }
 
     private final class QueueRequestListener implements
-            RequestListener<Paths> {
+            RequestListener<DataFromNetwork> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             Toast.makeText(ListOfPathsActivity.this,
@@ -102,20 +114,32 @@ public class ListOfPathsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onRequestSuccess(Paths kolejkiDto) {
+        public void onRequestSuccess(DataFromNetwork kolejkiDto) {
             ListOfPathsActivity.this.setProgressBarIndeterminateVisibility(false);
-
+            ArrayList<Paths> kolejkaDto = new ArrayList<Paths>();
+            if(kolejkiDto != null) {
+                kolejkaDto = new ArrayList<Paths>(kolejkiDto.getTrips());
+            }
+            else {
+                kolejkaDto = new ArrayList<Paths>();
+                Toast.makeText(ListOfPathsActivity.this,
+                        "Error: " + "brak danych", Toast.LENGTH_SHORT)
+                        .show();
+            }
         /*    recList = (RecyclerView) findViewById(R.id.recycledList2);
             recList.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(QueueToOfficeListActivity.this);
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);*/
 
-      //      ListModelViewAdapter  = new ListModelViewAdapter(kolejkiDto);
+            ListModelViewAdapter adapter= new ListModelViewAdapter(kolejkaDto);
             //  officeDataAdapter.setClickListener(this);
-     //       recList.setAdapter(queueDataAdapter);
+            mylist.setAdapter(adapter);
         }
 
 
     }
+
+
+
 }

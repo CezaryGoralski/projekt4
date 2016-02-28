@@ -79,9 +79,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
+        <service
+            android:name="com.octo.android.robospice.UncachedSpiceService"
+            android:exported="false" />
         <activity android:name=".Activites.MarkAsVisitedMarker"></activity>
-
+        <activity android:name=".Activites.ListOfPathsActivity"></activity>
         <activity
             android:name=".Activites.LoginActivity"
             android:label="@string/title_activity_login"

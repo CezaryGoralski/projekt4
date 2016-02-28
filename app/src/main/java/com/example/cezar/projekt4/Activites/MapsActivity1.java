@@ -1,23 +1,12 @@
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.cezar.projekt4.Activites;
 
+import com.example.cezar.projekt4.Activites.ListOfPathsActivity;
+import com.example.cezar.projekt4.Activites.MarkAsVisitedMarker;
+import com.example.cezar.projekt4.Activites.NewListChooser;
+import com.example.cezar.projekt4.Activites.PlacesActivity;
 import com.example.cezar.projekt4.HttpConnection;
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.Model.DataFromNetwork;
 import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.Model.Paths;
 import com.example.cezar.projekt4.R;
@@ -158,7 +147,7 @@ public class MapsActivity1 extends AppCompatActivity
          */
 
 
-  //      readTaskk.execute(url);
+        //      readTaskk.execute(url);
 
     }
 
@@ -183,13 +172,13 @@ public class MapsActivity1 extends AppCompatActivity
         String url = null;
         Log.e("size", String.valueOf(markersList.size()));
         if(markersList.size() > 0) {
-           // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
+            // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String origin = "origin=" + latitude + "," + lognitude;
             String destination = "destination=" +  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
             String params = origin + "&"+ destination +"&" + sensor;
-           // markersList.remove(0);
+            // markersList.remove(0);
             markersList.remove(markersList.size() - 1);
             if(markersList.size() > 0 ){
                 String waypoints = "waypoints=optimize:true";
@@ -198,7 +187,7 @@ public class MapsActivity1 extends AppCompatActivity
                 }
                 params = origin + "&"+ destination +"&" + waypoints + "&" + sensor;
             }
-           url = "https://maps.googleapis.com/maps/api/directions/"
+            url = "https://maps.googleapis.com/maps/api/directions/"
                     + output + "?" + params;
         }
         System.out.println(url);
@@ -265,9 +254,9 @@ public class MapsActivity1 extends AppCompatActivity
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-                 //   Log.e("data", position.toString());
+                    //   Log.e("data", position.toString());
                     points.add(position);
-                  //  mypoints.add(position);
+                    //  mypoints.add(position);
                 }
 
                 polyLineOptions.addAll(points);
@@ -279,8 +268,8 @@ public class MapsActivity1 extends AppCompatActivity
 
         }
 
-    //    Intent loginIntent = new Intent(this, LoginActivity.class);
-    //    startActivity(loginIntent);
+        //    Intent loginIntent = new Intent(this, LoginActivity.class);
+        //    startActivity(loginIntent);
 
 
 
@@ -302,7 +291,7 @@ public class MapsActivity1 extends AppCompatActivity
 
             Gson gson = new Gson();
 
-            Paths[] ordersDto = new Paths[0];
+            DataFromNetwork ordersDto = null;
             ;
             try {
                 HttpURLConnection connect = (HttpURLConnection) url.openConnection();
@@ -312,14 +301,14 @@ public class MapsActivity1 extends AppCompatActivity
                 InputStream ios = connect.getInputStream();
 
                 String body = CharStreams.toString(new InputStreamReader(ios, Charset.defaultCharset()));
-                ordersDto = gson.fromJson(body, Paths[].class);
+                ordersDto = gson.fromJson(body, DataFromNetwork.class);
                 ios.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(ordersDto[0]);
+
             if(ordersDto != null)
-                return ordersDto[0].getPlaces();
+                return ordersDto.getTrips().get(0).getPlaces();
             else
                 return null;
         }
@@ -365,7 +354,6 @@ public class MapsActivity1 extends AppCompatActivity
 
         Geocoder g = new Geocoder(this, Locale.getDefault());
   /*      List<Address> a = new ArrayList<Address>();
-
         try {
          a = g.getFromLocationName("Warszawa",1);
         } catch (IOException e) {
@@ -379,13 +367,11 @@ public class MapsActivity1 extends AppCompatActivity
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
                     .title("warszawa"));
         }
-
         try {
             a = g.getFromLocationName("Poznan",1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         for(Address m: a){
             tmp2 = new LatLng(m.getLatitude(), m.getLongitude());
             map.addMarker(new MarkerOptions()
@@ -412,8 +398,8 @@ public class MapsActivity1 extends AppCompatActivity
             }
 
             if(paths != null)
-               Marker.convertToMarkers(paths);
-                System.out.println("after convert");
+                Marker.convertToMarkers(paths);
+            System.out.println("after convert");
 /*
             for (Marker m : Marker.getList()) {
                 System.out.println (m.getName());
@@ -422,11 +408,9 @@ public class MapsActivity1 extends AppCompatActivity
                     adresses = g.getFromLocationName(m.getAdress(), 1);
                 } catch (IOException e) {
                     e.printStackTrace();
-
                    {
                         m.setLatitude(adresses.get(0).getLatitude());
                         m.setLongitude(adresses.get(0).getLongitude());                }
-
                         m.setVisited(false);
                     }
             }*/
@@ -472,11 +456,10 @@ public class MapsActivity1 extends AppCompatActivity
                 .title("wall_strett"));
 
 /*
-
         Log.e("data",String.valueOf(mypoints.size()));
         map.addPolyline(new PolylineOptions().addAll(mypoints).width(5).color(Color.RED));*/
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-//dupa
+            //dupa
             @Override
             public void onMapLongClick(LatLng latLng) {
                 for (com.google.android.gms.maps.model.Marker marker : markersList) {
@@ -498,69 +481,69 @@ public class MapsActivity1 extends AppCompatActivity
     }
 
 
-      /**
-       * Button to get current Location. This demonstrates how to get the current Location as required
-       * without needing to register a LocationListener.
-       */
-      public void showMyLocation(View view) {
-          if (mGoogleApiClient.isConnected()) {
-              String msg = "Location = "
-                      + LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-              Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-          }
-      }
+    /**
+     * Button to get current Location. This demonstrates how to get the current Location as required
+     * without needing to register a LocationListener.
+     */
+    public void showMyLocation(View view) {
+        if (mGoogleApiClient.isConnected()) {
+            String msg = "Location = "
+                    + LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-      /**
-       * Implementation of {@link LocationListener}.
-       */
-      @Override
-      public void onLocationChanged(Location location) {
-          //mMessageView.setText("Location = " + location);
-      }
+    /**
+     * Implementation of {@link LocationListener}.
+     */
+    @Override
+    public void onLocationChanged(Location location) {
+        //mMessageView.setText("Location = " + location);
+    }
 
-      /**
-       * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
-       */
-      @Override
-      public void onConnected(Bundle connectionHint) {
-          LocationServices.FusedLocationApi.requestLocationUpdates(
-                  mGoogleApiClient,
-                  REQUEST,
-                  this);  // LocationListener
-      }
+    /**
+     * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
+     */
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient,
+                REQUEST,
+                this);  // LocationListener
+    }
 
-      /**
-       * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
-       */
-      @Override
-      public void onConnectionSuspended(int cause) {
-          // Do nothing
-      }
+    /**
+     * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
+     */
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // Do nothing
+    }
 
-      /**
-       * Implementation of {@link OnConnectionFailedListener}.
-       */
-      @Override
-      public void onConnectionFailed(ConnectionResult result) {
-          // Do nothing
-      }
+    /**
+     * Implementation of {@link OnConnectionFailedListener}.
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        // Do nothing
+    }
 
-      @Override
-      public boolean onMyLocationButtonClick() {
-          Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-          // Return false so that we don't consume the event and the default behavior still occurs
-          // (the camera animates to the user's current position).
-          return false;
-      }
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
 
 
-      public void refreshMarkers() {
-          Intent openSecondActivity = new Intent(this, MapsActivity1.class);
-          openSecondActivity.putExtra("refresh", true);
-          openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
-          openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
-          startActivity(openSecondActivity);
-      }
+    public void refreshMarkers() {
+        Intent openSecondActivity = new Intent(this, MapsActivity1.class);
+        openSecondActivity.putExtra("refresh", true);
+        openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+        openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
+        startActivity(openSecondActivity);
+    }
 
     public void showPlaces() {
         Intent openSecondActivity = new Intent(this, PlacesActivity.class);
@@ -574,5 +557,6 @@ public class MapsActivity1 extends AppCompatActivity
 
     public void showLists(){
         Intent openSecondActivity = new Intent(this,ListOfPathsActivity.class);
+        startActivity(openSecondActivity);
     }
-  }
+}
