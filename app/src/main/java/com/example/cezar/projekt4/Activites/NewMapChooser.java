@@ -64,7 +64,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         if(mMarkers != null){
             numberTextView.setText(String.valueOf(mMarkers.size()));
-            distanceTextView.setText(String.valueOf(calculateDistance(mMarkers)));
+            distanceTextView.setText(String.valueOf(4));
         }
 
     }
