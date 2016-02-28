@@ -107,6 +107,9 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             Marker.writeMarkers();
             Intent intent = new Intent(this, MapsActivity1.class);
             intent.putExtra("markers", mMarkers);
+            intent.putExtra("refresh", true);
+            intent.putExtra("Latitude", mapa.getMyLocation().getLatitude());
+            intent.putExtra("Lognitude",mapa.getMyLocation().getLongitude());
             startActivity(intent);
         }
 
