@@ -80,7 +80,7 @@ public class MapsActivity1 extends AppCompatActivity
     private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
     private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
 
-    private ArrayList<Marker> mMarkers;
+    private ArrayList<Marker> mMarkers = null;
 
     PolylineOptions polyLineOptionsb = null;
     private ArrayList<LatLng> mypoints = new ArrayList<LatLng>();
@@ -97,6 +97,10 @@ public class MapsActivity1 extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps1);
+
+        if(getIntent().hasExtra("markers")){
+            mMarkers = (ArrayList<Marker>) getIntent().getSerializableExtra("markers");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -416,6 +420,9 @@ public class MapsActivity1 extends AppCompatActivity
 
         }
 
+        if(mMarkers != null){
+            Marker.setList(mMarkers);
+        }
 
         for (Marker m : Marker.getToDoList()) {
             MarkerOptions marketOption = new MarkerOptions()

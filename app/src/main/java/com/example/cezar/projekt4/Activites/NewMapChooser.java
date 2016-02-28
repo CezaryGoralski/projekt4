@@ -101,9 +101,10 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_next) {
-            Marker.setList(mMarkers);
-            Marker.writeMarkers();
+            //Marker.setList(mMarkers);
+            //Marker.writeMarkers();
             Intent intent = new Intent(this, MapsActivity1.class);
+            intent.putExtra("markers", mMarkers);
             startActivity(intent);
         }
 
