@@ -112,56 +112,6 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap map) {
         mapa = map;
-        mapa.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
-                mapa.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-                    @Override
-                    public View getInfoWindow(com.google.android.gms.maps.model.Marker marker) {
-                        return null;
-                    }
-
-                    @Override
-                    public View getInfoContents(com.google.android.gms.maps.model.Marker marker) {
-                        View v = getLayoutInflater().inflate(R.layout.place_info_window, null);
-
-                        String[] parts = marker.getSnippet().split("|");
-
-                        final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
-                        final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
-                        final TextView categoryTextView = (TextView) v.findViewById(R.id.place_category);
-
-                        titleTextView.setText(marker.getTitle());
-                        addressTextView.setText(parts[0]);
-                        categoryTextView.setText(parts[1]);
-
-                        return v;
-                    }
-
-                });
-
-                mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-
-                    @Override
-                    public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
-                        Intent intent = new Intent(NewMapChooser.this, PlaceActivity.class);
-                        Marker mm = null;
-                        for(Marker m : mMarkers){
-                            if(m.getName().equalsIgnoreCase(marker.getTitle())){
-                                mm = m;
-                                break;
-                            }
-                        }
-                        intent.putExtra("marker", mm);
-                        startActivity(intent);
-                    }
-
-                });
-                return false;
-            }
-        });
-
         for (Marker m : mMarkers) {
             MarkerOptions marketOption = new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
@@ -199,6 +149,56 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         }
         System.out.println("Koniec wczytywania");
+
+        mapa.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                mapa.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    @Override
+                    public View getInfoWindow(com.google.android.gms.maps.model.Marker marker) {
+                        return null;
+                    }
+
+                    @Override
+                    public View getInfoContents(com.google.android.gms.maps.model.Marker marker) {
+                        View v = getLayoutInflater().inflate(R.layout.place_info_window, null);
+
+                        String[] parts = marker.getSnippet().split("|");
+
+                        final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
+                        final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
+                        final TextView categoryTextView = (TextView) v.findViewById(R.id.place_category);
+
+                        titleTextView.setText(marker.getTitle());
+                        addressTextView.setText(parts[0]);
+                        categoryTextView.setText(parts[1]);
+
+                        return v;
+                    }
+
+                });
+
+                mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+                    @Override
+                    public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
+                        Intent intent = new Intent(NewMapChooser.this, PlaceActivity.class);
+                        Marker mm = null;
+                        for (Marker m : mMarkers) {
+                            if (m.getName().equalsIgnoreCase(marker.getTitle())) {
+                                mm = m;
+                                break;
+                            }
+                        }
+                        intent.putExtra("marker", mm);
+                        startActivity(intent);
+                    }
+
+                });
+                return false;
+            }
+        });
     }
 
     private int calculateDistance(ArrayList<Marker> markers) {
