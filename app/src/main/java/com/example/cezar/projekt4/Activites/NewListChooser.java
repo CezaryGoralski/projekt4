@@ -155,7 +155,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                         .setIcon(R.drawable.ic_warning)
                         .show();
             }else{
-                intent.putExtra("markers", getSelectedMarkers(mMarkers));
+                intent.putExtra("markers", newMarkers);
                 startActivity(intent);
             }
         }

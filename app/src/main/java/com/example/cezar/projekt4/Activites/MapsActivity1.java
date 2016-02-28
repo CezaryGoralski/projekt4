@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -433,6 +434,8 @@ public class MapsActivity1 extends AppCompatActivity
             com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
         }
+
+        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mMarkers.get(0).getLatitude(), mMarkers.get(0).getLongitude()), 11));
 
         if (Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.getList());
