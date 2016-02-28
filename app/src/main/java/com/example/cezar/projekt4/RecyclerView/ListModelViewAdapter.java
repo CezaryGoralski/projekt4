@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.Model.NetworkModels.Paths;
 import com.example.cezar.projekt4.R;
 
@@ -17,9 +18,12 @@ import java.util.ArrayList;
 public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> {
 
     private final ArrayList<Paths> itemsList;
-
-    public ListModelViewAdapter(ArrayList<Paths> itemsList) {
+    private double latitude;
+    private double longitude;
+    public ListModelViewAdapter(ArrayList<Paths> itemsList, double latitude, double longitude) {
         this.itemsList = itemsList;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -35,7 +39,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
         final Paths item = itemsList.get(position);
 
         holder.nameTextView.setText(item.getName());
-
+        holder.setLatLong(latitude,longitude,new ArrayList<Marker>(item.getPlaces()));
         String flex;
 
         switch (item.getPlaces().size()) {

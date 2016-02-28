@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.Model.NetworkModels.DataFromNetwork;
 import com.example.cezar.projekt4.Model.NetworkModels.Paths;
 import com.example.cezar.projekt4.Network.ListOfListSpiceRequest;
@@ -49,9 +50,10 @@ public class ListOfPathsActivity extends AppCompatActivity {
             }
         });
 
-
+        latitude = getIntent().getDoubleExtra("Latitude", 0);
+        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         performRequest();
-        adapter = new ListModelViewAdapter(new ArrayList<Paths>());
+        adapter = new ListModelViewAdapter(new ArrayList<Paths>(),latitude,lognitude);
 
         mylist = (RecyclerView) findViewById(R.id.lists);
         mylist.setLayoutManager(new LinearLayoutManager(this));
@@ -67,10 +69,14 @@ public class ListOfPathsActivity extends AppCompatActivity {
         return true;
     }
 
-    public void openMap(View view) {
+    public void openMap(View view, ArrayList<Marker> mMarkers) {
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
-        openSecondActivity.putExtra("Latitude", latitude);
-        openSecondActivity.putExtra("Lognitude", lognitude);
+        Marker.setList(mMarkers);
+        Marker.writeMarkers();
+        openSecondActivity .putExtra("refresh", true);
+        openSecondActivity .putExtra("download", false);
+        openSecondActivity .putExtra("Latitude", latitude);
+        openSecondActivity .putExtra("Lognitude", lognitude);
         startActivity(openSecondActivity);
     }
 
@@ -130,7 +136,7 @@ public class ListOfPathsActivity extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             recList.setLayoutManager(llm);*/
 
-            ListModelViewAdapter adapter = new ListModelViewAdapter(kolejkaDto);
+            ListModelViewAdapter adapter = new ListModelViewAdapter(kolejkaDto,latitude,lognitude);
             //  officeDataAdapter.setClickListener(this);
             mylist.setAdapter(adapter);
         }

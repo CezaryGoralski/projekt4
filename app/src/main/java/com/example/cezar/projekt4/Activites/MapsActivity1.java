@@ -72,7 +72,7 @@ public class MapsActivity1 extends AppCompatActivity
     private ArrayList<com.google.android.gms.maps.model.Marker> markersList = new ArrayList<com.google.android.gms.maps.model.Marker>();
     private GoogleMap mapa;
     private boolean refresh = true;
-    private boolean download = false;
+    private boolean download = true;
     private double latitude;
     private double lognitude;
     private static final LatLng LOWER_MANHATTAN = new LatLng(40.722543,
@@ -139,6 +139,7 @@ public class MapsActivity1 extends AppCompatActivity
                 .addOnConnectionFailedListener(this)
                 .build();
         refresh = getIntent().getBooleanExtra("refresh", false);
+        download = getIntent().getBooleanExtra("download", false);
         latitude = getIntent().getDoubleExtra("Latitude", 0);
         lognitude = getIntent().getDoubleExtra("Lognitude", 0);
         /*
@@ -169,19 +170,19 @@ public class MapsActivity1 extends AppCompatActivity
     }
 
     private String getMapsApiDirectionsUrl(ArrayList<Marker> markersList) {
-
+        ArrayList<Marker> myMarkers = new ArrayList<>(markersList);
         String url = null;
-        Log.e("size", String.valueOf(markersList.size()));
-        if (markersList.size() > 0) {
+        Log.e("size", String.valueOf(myMarkers.size()));
+        if (myMarkers.size() > 0) {
             // String origin = "origin="+  markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
             String origin = "origin=" +  latitude + "," +  lognitude;
-            String destination = "destination=" + markersList.get(markersList.size() - 1).getLatitude() + "," + markersList.get(markersList.size() - 1).getLongitude();
+            String destination = "destination=" + myMarkers.get(myMarkers.size() - 1).getLatitude() + "," + myMarkers.get(myMarkers.size() - 1).getLongitude();
             String sensor = "sensor=false";
             String output = "json";
             String params = origin + "&" + destination + "&" + sensor;
             // markersList.remove(0);
-            markersList.remove(markersList.size() - 1);
-            if (markersList.size() > 0) {
+            myMarkers.remove(myMarkers.size() - 1);
+            if (myMarkers.size() > 0) {
                 String waypoints = "waypoints=optimize:true";
                 for (Marker m : markersList) {
                     waypoints = waypoints + "|" + m.getLatitude() + "," + m.getLongitude();
@@ -389,17 +390,18 @@ public class MapsActivity1 extends AppCompatActivity
 
             List<Marker> paths = null;
 
+            if(download) {
+                try {
+                    paths = new DownloadList().execute().get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                paths = new DownloadList().execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                if (paths != null)
+                    Marker.convertToMarkers(paths);
             }
-
-            if (paths != null)
-                Marker.convertToMarkers(paths);
             System.out.println("after convert");
 /*
             for (Marker m : Marker.getList()) {
@@ -525,11 +527,11 @@ public class MapsActivity1 extends AppCompatActivity
                         for (Marker m : Marker.getToDoList()) {
                             Log.d("NewMapChooser", "mMarkers:: " + m.getName());
                             if (m.getName().equalsIgnoreCase(marker.getTitle())) {
-                                mm = m;
+                                Log.d("NewMapChooser", "selected " + m.getName());
+                                intent.putExtra("marker", m);
                                 break;
                             }
                         }
-                        intent.putExtra("marker", mm);
                         startActivity(intent);
                     }
 
@@ -599,6 +601,7 @@ public class MapsActivity1 extends AppCompatActivity
     public void refreshMarkers() {
         Intent openSecondActivity = new Intent(this, MapsActivity1.class);
         openSecondActivity.putExtra("refresh", true);
+        openSecondActivity.putExtra("download", true);
         openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
         openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
         startActivity(openSecondActivity);
@@ -616,6 +619,8 @@ public class MapsActivity1 extends AppCompatActivity
 
     public void showLists() {
         Intent openSecondActivity = new Intent(this, ListOfPathsActivity.class);
+        openSecondActivity.putExtra("Latitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLatitude());
+        openSecondActivity.putExtra("Lognitude", LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient).getLongitude());
         startActivity(openSecondActivity);
     }
 }
