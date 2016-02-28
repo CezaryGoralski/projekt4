@@ -35,7 +35,6 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
         final Paths item = itemsList.get(position);
 
         holder.nameTextView.setText(item.getName());
-        //  holder.descriptionTextView.setText(item.getDescription());
 
         String flex;
 
@@ -53,8 +52,7 @@ public class ListModelViewAdapter extends RecyclerView.Adapter<ListModelHolder> 
                 break;
         }
 
-        holder.numberTextView.setText(item.getPlaces().size() + flex);
-        //
+        holder.numberTextView.setText(item.getPlaces().size() + " " + flex);
     }
 
     @Override
