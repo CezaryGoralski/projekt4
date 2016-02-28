@@ -58,21 +58,25 @@
 
                     <TextView
                         android:id="@+id/place_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="Miejsce"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textSize="16sp"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/linearLayout6"
+                        android:layout_toStartOf="@+id/linearLayout6"
+                        android:layout_marginRight="16dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true">
+                        android:layout_centerVertical="true"
+                        android:id="@+id/linearLayout6">
 
                         <TextView
                             android:id="@+id/place_type"
