@@ -166,6 +166,8 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
                         String[] parts = marker.getSnippet().split("|");
                         Log.d("NewMapChooser", marker.getSnippet());
+                        Log.d("NewMapChooser", parts[0]);
+                        Log.d("NewMapChooser", parts[1]);
 
                         final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
                         final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
