@@ -164,18 +164,21 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
                     public View getInfoContents(com.google.android.gms.maps.model.Marker marker) {
                         View v = getLayoutInflater().inflate(R.layout.place_info_window, null);
 
-                        String[] parts = marker.getSnippet().split("|");
+                        String snippet = marker.getSnippet();
+                        String address = snippet.substring(0, snippet.indexOf("|"));
+                        String category = snippet.substring(snippet.indexOf("|"), snippet.length());
+
                         Log.d("NewMapChooser", marker.getSnippet());
-                        Log.d("NewMapChooser", parts[0]);
-                        Log.d("NewMapChooser", parts[1]);
+                        Log.d("NewMapChooser", address);
+                        Log.d("NewMapChooser", category);
 
                         final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
                         final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
                         final TextView categoryTextView = (TextView) v.findViewById(R.id.place_category);
 
                         titleTextView.setText(marker.getTitle());
-                        addressTextView.setText(parts[0]);
-                        categoryTextView.setText(parts[1]);
+                        addressTextView.setText(address);
+                        categoryTextView.setText(category);
 
                         return v;
                     }
