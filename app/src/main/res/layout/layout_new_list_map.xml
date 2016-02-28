@@ -109,11 +109,13 @@
 
         </ScrollView>
 
-    <com.google.android.gms.maps.MapView
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/options_bar" />
+        android:layout_below="@+id/options_bar"
+        class="com.google.android.gms.maps.SupportMapFragment" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabPlaces"

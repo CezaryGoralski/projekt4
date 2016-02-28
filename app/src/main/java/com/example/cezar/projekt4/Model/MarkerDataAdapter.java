@@ -1,4 +1,4 @@
-package com.example.cezar.projekt4;
+package com.example.cezar.projekt4.Model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.cezar.projekt4.Markers.Marker;
+import com.example.cezar.projekt4.R;
 
 import java.util.ArrayList;
 
