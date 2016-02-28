@@ -89,8 +89,6 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
                     m.setSelected(true);
             }
         }
-
-        notifyDataSetChanged();
     }
 
     private void applyAndAnimateRemovals(List<Marker> newModels) {
