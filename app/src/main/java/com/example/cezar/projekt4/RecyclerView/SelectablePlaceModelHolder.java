@@ -3,8 +3,7 @@ package com.example.cezar.projekt4.RecyclerView;
 /**
  * Created by Marcin on 27.02.2016.
  */
-import android.content.Context;
-import android.content.Intent;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,12 +11,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.cezar.projekt4.Activites.PlaceActivity;
 import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.R;
 
 import java.util.List;
-import java.util.Map;
 
 public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
 

@@ -18,7 +18,6 @@ import com.example.cezar.projekt4.Model.NetworkModels.PlacesListModel;
 import com.example.cezar.projekt4.Network.ListOfPlacesSpiceRequest;
 import com.example.cezar.projekt4.R;
 import com.example.cezar.projekt4.RecyclerView.DividerItemDecoration;
-import com.example.cezar.projekt4.RecyclerView.PlaceModelViewAdapter;
 import com.example.cezar.projekt4.RecyclerView.SelectablePlaceModelViewAdapter;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.UncachedSpiceService;
@@ -175,6 +174,7 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                         .show();
             }
             System.out.println(kolejkaDto);
+            mMarkers = kolejkaDto;
             placeModelViewAdapter = new SelectablePlaceModelViewAdapter(kolejkaDto);
             mylist.setAdapter(placeModelViewAdapter);
         }

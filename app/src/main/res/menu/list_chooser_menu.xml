@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".Activites.NewMapChooser">
 
     <item android:id="@+id/action_next"
-        android:title="Next"
+        android:title="Show map"
         android:orderInCategory="200"
         app:showAsAction="always"/>
 
