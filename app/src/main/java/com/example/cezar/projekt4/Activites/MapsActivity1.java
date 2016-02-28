@@ -79,6 +79,8 @@ public class MapsActivity1 extends AppCompatActivity
     private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
     private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
 
+    private ArrayList<Marker> mMarkers;
+
     PolylineOptions polyLineOptionsb = null;
     private ArrayList<LatLng> mypoints = new ArrayList<LatLng>();
 
@@ -342,7 +344,7 @@ public class MapsActivity1 extends AppCompatActivity
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
         map.setMyLocationEnabled(true);
         map.setOnMyLocationButtonClickListener(this);
 
@@ -421,6 +423,7 @@ public class MapsActivity1 extends AppCompatActivity
             com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
         }
+
         if (Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.executeKruskal());
             ReadTask readTask = null;
@@ -469,6 +472,56 @@ public class MapsActivity1 extends AppCompatActivity
                     }
                 }
 
+            }
+        });
+
+        mapa.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                mapa.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    @Override
+                    public View getInfoWindow(com.google.android.gms.maps.model.Marker marker) {
+                        return null;
+                    }
+
+                    @Override
+                    public View getInfoContents(com.google.android.gms.maps.model.Marker marker) {
+                        View v = getLayoutInflater().inflate(R.layout.place_info_window, null);
+
+                        String[] parts = marker.getSnippet().split("|");
+
+                        final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
+                        final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
+                        final TextView categoryTextView = (TextView) v.findViewById(R.id.place_category);
+
+                        titleTextView.setText(marker.getTitle());
+                        addressTextView.setText(parts[0]);
+                        categoryTextView.setText(parts[1]);
+
+                        return v;
+                    }
+
+                });
+
+                mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+                    @Override
+                    public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
+                        Intent intent = new Intent(MapsActivity1.this, PlaceActivity.class);
+                        Marker mm = null;
+                        for (Marker m : Marker.getToDoList()) {
+                            if (m.getName().equalsIgnoreCase(marker.getTitle())) {
+                                mm = m;
+                                break;
+                            }
+                        }
+                        intent.putExtra("marker", mm);
+                        startActivity(intent);
+                    }
+
+                });
+                return false;
             }
         });
     }

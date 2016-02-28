@@ -4,6 +4,7 @@ package com.example.cezar.projekt4.Activites;
  * Created by Marcin on 28.02.2016.
  */
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -20,8 +21,6 @@ import com.example.cezar.projekt4.Markers.Marker;
 import com.example.cezar.projekt4.PathJSONParser;
 import com.example.cezar.projekt4.R;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,7 +32,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -41,7 +39,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallback {
 
-    private MapView myMap;
     private ArrayList<Marker> mMarkers;
 
     private TextView numberTextView,
@@ -52,6 +49,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             -73.998585);
     private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
     private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,9 +93,60 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap map) {
         mapa = map;
+        mapa.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                mapa.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    @Override
+                    public View getInfoWindow(com.google.android.gms.maps.model.Marker marker) {
+                        return null;
+                    }
+
+                    @Override
+                    public View getInfoContents(com.google.android.gms.maps.model.Marker marker) {
+                        View v = getLayoutInflater().inflate(R.layout.place_info_window, null);
+
+                        String[] parts = marker.getSnippet().split("|");
+
+                        final TextView titleTextView = (TextView) v.findViewById(R.id.place_title);
+                        final TextView addressTextView = (TextView) v.findViewById(R.id.place_address);
+                        final TextView categoryTextView = (TextView) v.findViewById(R.id.place_category);
+
+                        titleTextView.setText(marker.getTitle());
+                        addressTextView.setText(parts[0]);
+                        categoryTextView.setText(parts[1]);
+
+                        return v;
+                    }
+
+                });
+
+                mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+                    @Override
+                    public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
+                        Intent intent = new Intent(NewMapChooser.this, PlaceActivity.class);
+                        Marker mm = null;
+                        for(Marker m : mMarkers){
+                            if(m.getName().equalsIgnoreCase(marker.getTitle())){
+                                mm = m;
+                                break;
+                            }
+                        }
+                        intent.putExtra("marker", mm);
+                        startActivity(intent);
+                    }
+
+                });
+                return false;
+            }
+        });
+
         for (Marker m : mMarkers) {
             MarkerOptions marketOption = new MarkerOptions()
                     .position(new LatLng(m.getLatitude(), m.getLongitude()))
+                    .snippet(m.getAddress()+"|"+m.getCategory())
                     .title(m.getName());
             com.google.android.gms.maps.model.Marker mapMarker = map.addMarker(marketOption);
             markersList.add(mapMarker);
