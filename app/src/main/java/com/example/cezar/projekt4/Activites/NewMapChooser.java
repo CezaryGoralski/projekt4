@@ -124,7 +124,7 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             markersList.add(mapMarker);
         }
 
-        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mMarkers.get(0).getLatitude(), mMarkers.get(0).getLongitude()), 13));
+        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mMarkers.get(0).getLatitude(), mMarkers.get(0).getLongitude()), 11));
 
         /*map.addMarker(new MarkerOptions()
                 .position(LOWER_MANHATTAN)
