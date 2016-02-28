@@ -435,8 +435,6 @@ public class MapsActivity1 extends AppCompatActivity
             markersList.add(mapMarker);
         }
 
-        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(markersList.get(0).getPosition().latitude, markersList.get(0).getPosition().longitude), 11));
-
         if (Marker.getToDoList().size() > 1) {
             String url = getMapsApiDirectionsUrl(Marker.getList());
            // String url = getMapsApiDirectionsUrl(Marker.executeKruskal());

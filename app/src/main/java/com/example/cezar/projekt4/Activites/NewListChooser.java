@@ -39,7 +39,8 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
     private SelectablePlaceModelViewAdapter placeModelViewAdapter;
     private SpiceManager spiceManager = new SpiceManager(
             UncachedSpiceService.class);
-
+    private double latitude;
+    private double lognitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,9 @@ public class NewListChooser extends AppCompatActivity implements SearchView.OnQu
                 onBackPressed();
             }
         });
+
+        latitude = getIntent().getDoubleExtra("Latitude", 0);
+        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
 
         mMarkers = new ArrayList<Marker>();
         performRequest();

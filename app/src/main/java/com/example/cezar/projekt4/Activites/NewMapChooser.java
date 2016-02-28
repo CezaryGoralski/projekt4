@@ -51,7 +51,8 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             -73.998585);
     private static final LatLng BROOKLYN_BRIDGE = new LatLng(40.7057, -73.9964);
     private static final LatLng WALL_STREET = new LatLng(40.7064, -74.0094);
-
+    private double latitude;
+    private double lognitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,8 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
             numberTextView.setText(String.valueOf(mMarkers.size()));
             distanceTextView.setText(String.valueOf(calculateDistance(mMarkers)));
         }
-
+        latitude = getIntent().getDoubleExtra("Latitude", 0);
+        lognitude = getIntent().getDoubleExtra("Lognitude", 0);
     }
 
     @Override
@@ -101,8 +103,8 @@ public class NewMapChooser extends AppCompatActivity implements OnMapReadyCallba
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_next) {
-            //Marker.setList(mMarkers);
-            //Marker.writeMarkers();
+            Marker.setList(mMarkers);
+            Marker.writeMarkers();
             Intent intent = new Intent(this, MapsActivity1.class);
             intent.putExtra("markers", mMarkers);
             startActivity(intent);
