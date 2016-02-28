@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:text="Tag miejsca"
+        android:text="Adres miejsca"
         android:id="@+id/place_address"
         android:layout_marginBottom="4dp" />
 
@@ -27,9 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/place_count"
+        android:id="@+id/place_category"
         android:textSize="12sp"
         android:textColor="@color/colorPrimary"
-        android:text="Cośtam o miesjcu" />
+        android:text="Kategoria" />
 
 </LinearLayout>

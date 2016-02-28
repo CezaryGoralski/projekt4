@@ -24,7 +24,7 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
 
     public SelectablePlaceModelViewAdapter(ArrayList<Marker> itemsList) {
         this.itemsList = new ArrayList<>(itemsList);
-        this.chosenMarkers = generateHashArray(itemsList);
+        this.chosenMarkers = new ArrayList<>();
     }
 
     @Override
@@ -59,14 +59,6 @@ public class SelectablePlaceModelViewAdapter extends RecyclerView.Adapter<Select
         } else {
             return itemsList.size();
         }
-    }
-
-    private ArrayList<String> generateHashArray(List<Marker> markers) {
-        final ArrayList<String> list = new ArrayList<>();
-        for (Marker m : markers) {
-            list.add(m.getName() + m.getAddress());
-        }
-        return list;
     }
 
     public Marker removeItem(int position) {
