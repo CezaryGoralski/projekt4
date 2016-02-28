@@ -57,9 +57,7 @@ public class SelectablePlaceModelHolder extends RecyclerView.ViewHolder {
                         chosenMarkers.add(tempHash);
                     }
                 } else {
-                    if (is) {
-                        chosenMarkers.remove(chosenMarkers.indexOf(tempHash));
-                    }
+                    chosenMarkers.remove(chosenMarkers.indexOf(tempHash));
                 }
 
             }
